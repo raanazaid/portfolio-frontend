@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FitTime — Gamifying Digital Wellbeing · Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--ink:#ffffff;--mid:#ccc;--soft:#888;--faint:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.08);
+  --orange:#E65100;--orange-light:#FFE0B2;--orange-mid:#FF8F00;
+  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none}
+.cursor{position:fixed;width:10px;height:10px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,0,0,0.25);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:54px;height:54px;border-color:var(--orange-mid)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-back{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);text-decoration:none;transition:color .3s}
+.nav-back:hover{color:var(--orange)}
+.nav-back i{font-size:1rem}
+.nav-logo{font-family:var(--fd);font-size:1.1rem;font-weight:800;letter-spacing:-.04em;color:var(--ink);text-decoration:none}
+.nav-tag{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+
+/* HERO — deep black with energy */
+.cs-hero{min-height:100vh;background:#080808;display:flex;flex-direction:column;justify-content:flex-end;padding:0 5vw 6rem;position:relative;overflow:hidden}
+.hero-glow-orange{position:absolute;top:-5%;left:-5%;width:60%;height:80%;background:radial-gradient(ellipse at 20% 30%,rgba(230,81,0,0.12),transparent 65%);pointer-events:none}
+.hero-glow-amber{position:absolute;bottom:-10%;right:0%;width:50%;height:60%;background:radial-gradient(ellipse at 80% 70%,rgba(255,143,0,0.08),transparent 60%);pointer-events:none}
+.hero-rings{position:absolute;right:8vw;top:50%;transform:translateY(-50%);opacity:.06}
+.hero-rings svg{width:400px;height:400px}
+.cs-hero-content{position:relative;z-index:2;max-width:900px}
+.cs-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;color:var(--orange-light);margin-bottom:1.8rem;opacity:0}
+.cs-eyebrow::before{content:'';width:22px;height:1px;background:var(--orange-light)}
+.cs-hero-title{font-family:var(--fd);font-size:clamp(3rem,7vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:1.6rem;opacity:0}
+.cs-hero-title span{color:var(--orange-light)}
+.cs-hero-summary{font-size:clamp(.92rem,1.4vw,1.05rem);line-height:1.8;color:rgba(255,255,255,0.5);max-width:600px;opacity:0}
+.cs-hero-meta{display:flex;gap:3rem;margin-top:3rem;flex-wrap:wrap;opacity:0}
+.meta-label{font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:.3rem}
+.meta-value{font-size:.88rem;color:rgba(255,255,255,0.72)}
+
+.cs-body{background:transparent}
+.cs-section{padding:8rem 5vw;max-width:1200px;margin:0 auto}
+.label{font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--orange);margin-bottom:1rem;display:flex;align-items:center;gap:.7rem;opacity:0}
+.label::before{content:'';width:16px;height:1px;background:var(--orange)}
+.cs-title{font-family:var(--fd);font-size:clamp(1.8rem,3.5vw,3rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin-bottom:1.4rem;color:var(--ink);opacity:0}
+.cs-body-text{font-size:.93rem;line-height:1.85;color:rgba(255,255,255,0.6);opacity:0}
+.sec-line{width:100%;height:1px;background:var(--border)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.two-col.rev{direction:rtl}
+.two-col.rev>*{direction:ltr}
+.col-visual{background:var(--faint);border-radius:16px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;opacity:0}
+
+/* Phone mock */
+.phone-wrap{display:flex;gap:1.2rem;align-items:center}
+.phone-frame{width:120px;background:#0a0a0a;border-radius:18px;overflow:hidden;border:1px solid rgba(255,143,0,0.2);box-shadow:0 16px 40px rgba(0,0,0,0.2);flex-shrink:0}
+.phone-top{height:28px;background:#111;display:flex;justify-content:center;align-items:center}
+.phone-notch{width:40px;height:5px;background:#1a1a1a;border-radius:3px}
+.phone-body{padding:10px}
+.phone-header{font-family:var(--fd);font-size:.7rem;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.02em}
+.app-row{display:flex;gap:6px;margin-bottom:6px}
+.app-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
+.app-icon.blocked{background:rgba(255,143,0,0.15);border:1px solid rgba(255,143,0,0.25);color:var(--orange-mid);position:relative}
+.app-icon.blocked::after{content:'🔒';position:absolute;top:-3px;right:-3px;font-size:.45rem}
+.app-icon.active{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4)}
+.earn-btn{width:100%;background:linear-gradient(135deg,var(--orange),var(--orange-mid));border-radius:6px;padding:6px;text-align:center;font-size:.6rem;font-weight:600;color:#fff;margin-top:6px;letter-spacing:.05em}
+.phone-divider{width:100%;height:1px;background:rgba(255,255,255,0.06);margin:6px 0}
+.rep-count{text-align:center;font-family:var(--fd);font-size:1.2rem;font-weight:800;color:var(--orange-light)}
+.rep-label{text-align:center;font-size:.5rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.15em}
+
+/* RANK SYSTEM */
+.rank-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
+.rank-card{border-radius:12px;padding:1.6rem;text-align:center;position:relative;overflow:hidden;opacity:0;transition:transform .3s,box-shadow .3s}
+.rank-card:hover{transform:translateY(-5px)}
+.rank-card.beginner{background:var(--faint);border:1px solid var(--border)}
+.rank-card.intermediate{background:rgba(255,224,178,0.4);border:1px solid rgba(255,143,0,0.2)}
+.rank-card.advanced{background:rgba(255,143,0,0.1);border:1px solid rgba(255,143,0,0.35)}
+.rank-card.master{background:#0a0a0a;border:1px solid rgba(255,143,0,0.5)}
+.rank-badge{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto .9rem;font-size:1.5rem}
+.rank-badge.b{background:rgba(0,0,0,0.06)}
+.rank-badge.i{background:rgba(255,143,0,0.15);color:var(--orange)}
+.rank-badge.a{background:rgba(255,143,0,0.2);color:var(--orange)}
+.rank-badge.m{background:rgba(255,143,0,0.15)}
+.rank-name{font-family:var(--fd);font-size:1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.3rem}
+.rank-card.master .rank-name{color:#fff}
+.rank-reps{font-size:.75rem;color:var(--soft);margin-bottom:.8rem}
+.rank-card.master .rank-reps{color:rgba(255,255,255,0.4)}
+.rank-reward{font-size:.78rem;font-weight:500;color:var(--orange)}
+.rank-card.beginner .rank-reward{color:var(--mid)}
+
+/* PROCESS */
+.process-timeline{display:flex;flex-direction:column;gap:1.5rem;margin-top:2.5rem;position:relative}
+.process-timeline::before{content:'';position:absolute;left:19px;top:0;bottom:0;width:1px;background:var(--border)}
+.pt-item{display:flex;gap:1.5rem;align-items:flex-start;opacity:0}
+.pt-dot{width:40px;height:40px;border-radius:50%;background:var(--orange-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--orange);font-size:1rem;position:relative;z-index:1;border:2px solid #fff}
+.pt-content{background:var(--faint);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;flex:1;transition:border-color .3s}
+.pt-content:hover{border-color:rgba(230,81,0,0.3)}
+.pt-label{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:.35rem}
+.pt-name{font-family:var(--fd);font-size:.95rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.4rem}
+.pt-desc{font-size:.8rem;line-height:1.6;color:var(--soft)}
+
+/* INSIGHTS */
+.insights-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;margin-top:2.5rem}
+.insight-card{background:var(--faint);border:1px solid var(--border);border-radius:12px;padding:1.6rem;opacity:0;transition:border-color .3s,box-shadow .3s}
+.insight-card:hover{border-color:rgba(230,81,0,0.25);box-shadow:0 8px 28px rgba(230,81,0,0.06)}
+.insight-icon{font-size:1.6rem;margin-bottom:.8rem;color:var(--orange)}
+.insight-stat{font-family:var(--fd);font-size:1.6rem;font-weight:800;color:var(--ink);letter-spacing:-.04em;margin-bottom:.3rem}
+.insight-label{font-size:.8rem;color:var(--soft);line-height:1.5}
+
+/* TECH STACK */
+.tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
+.tech-card{background:var(--faint);border:1px solid var(--border);border-radius:10px;padding:1.4rem;text-align:center;opacity:0;transition:border-color .3s}
+.tech-card:hover{border-color:rgba(230,81,0,0.25)}
+.tech-icon{font-size:1.8rem;margin-bottom:.6rem;color:var(--orange)}
+.tech-name{font-family:var(--fd);font-size:.9rem;font-weight:700;margin-bottom:.25rem}
+.tech-desc{font-size:.72rem;color:var(--soft)}
+
+/* CHALLENGES */
+.challenges{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.5rem}
+.challenge-card{background:var(--faint);border:1px solid var(--border);border-radius:10px;padding:1.4rem;opacity:0;display:flex;gap:1rem}
+.challenge-card:hover{border-color:rgba(230,81,0,0.25)}
+.ch-icon{width:36px;height:36px;border-radius:8px;background:var(--orange-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--orange);font-size:.9rem;margin-top:.15rem}
+.ch-problem{font-size:.75rem;font-weight:500;color:var(--ink);margin-bottom:.3rem}
+.ch-solution{font-size:.75rem;color:var(--soft);line-height:1.5}
+.ch-tag{display:inline-block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .5rem;border-radius:3px;background:rgba(230,81,0,0.1);color:var(--orange);margin-bottom:.4rem}
+
+/* CONCLUSION */
+.cs-conclusion{background:#080808;padding:8rem 5vw;text-align:center;position:relative;overflow:hidden}
+.conc-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse at center,rgba(230,81,0,0.08),transparent 70%);pointer-events:none}
+.conclusion-text{font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.8rem);font-weight:700;letter-spacing:-.03em;line-height:1.3;max-width:900px;margin:0 auto 2rem;color:#fff;position:relative;opacity:0}
+.conclusion-text em{color:var(--orange-light);font-style:normal}
+.conclusion-sub{font-size:.93rem;color:rgba(255,255,255,0.4);max-width:480px;margin:0 auto 2.5rem;line-height:1.7;position:relative;opacity:0}
+.btn-orange{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:8px;background:var(--orange);color:#fff;text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;transition:background .3s,box-shadow .3s,transform .25s;position:relative;opacity:0}
+.btn-orange:hover{background:#bf360c;box-shadow:0 0 28px rgba(230,81,0,0.3);transform:scale(1.03)}
+
+.cs-footer{background:transparent;border-top:1px solid var(--border);padding:2.5rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem}
+.cs-footer a{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);text-decoration:none;transition:color .3s}
+.cs-footer a:hover{color:var(--orange)}
+
+/* ── FitTime App Showcase ──────────────────────── */
+.ft-showcase{position:relative;overflow:hidden}
+/* floating vectors */
+.ft-floats{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.ft-vec{position:absolute;opacity:1}
+.ft-v1{width:80px;top:8%;left:3%;animation:flt1 7s ease-in-out infinite}
+.ft-v2{width:44px;top:15%;right:5%;animation:flt2 9s ease-in-out infinite}
+.ft-v3{width:60px;bottom:30%;left:2%;animation:flt3 8s ease-in-out infinite}
+.ft-v4{width:48px;bottom:20%;right:4%;animation:flt1 10s ease-in-out infinite reverse}
+.ft-v5{width:80px;top:50%;left:50%;transform:translateX(-50%);animation:flt2 12s ease-in-out infinite}
+@keyframes flt1{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-18px) rotate(6deg)}}
+@keyframes flt2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(14px) rotate(-5deg)}}
+@keyframes flt3{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-10px) rotate(4deg)}66%{transform:translateY(8px) rotate(-3deg)}}
+
+/* Carousel */
+.ft-carousel-wrap{position:relative;width:100%;overflow:hidden;margin-bottom:2rem;padding:2rem 0 3.5rem}
+.ft-carousel-track{display:flex;gap:1.2rem;transition:transform .55s cubic-bezier(.22,.68,0,1.1);will-change:transform}
+/* phone frame */
+.ft-phone{flex-shrink:0;width:150px;border-radius:24px;background:#111;border:1px solid rgba(255,143,0,0.15);overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.4);transition:transform .4s,box-shadow .4s,border-color .4s;cursor:pointer}
+.ft-phone.active{transform:scale(1.08) translateY(-8px);border-color:rgba(255,143,0,.5);box-shadow:0 28px 70px rgba(255,143,0,.15)}
+.ft-phone-top{height:22px;background:#0a0a0a;display:flex;justify-content:center;align-items:center}
+.ft-phone-notch{width:36px;height:5px;background:#1a1a1a;border-radius:3px}
+.ft-phone-screen{aspect-ratio:9/16;overflow:hidden;position:relative}
+.ft-phone-screen img{width:100%;height:100%;object-fit:cover;display:block}
+.ft-phone-fallback{width:100%;height:100%;background:linear-gradient(135deg,#111,#1a1a1a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:rgba(255,143,0,.5);font-size:.58rem}
+.ft-phone-fallback i{font-size:1.4rem}
+.ft-phone-label{text-align:center;font-size:.6rem;padding:.5rem .4rem;color:rgba(255,255,255,.35);letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* dots */
+.ft-carousel-dots{display:flex;justify-content:center;gap:.45rem;margin-top:1.2rem}
+.ft-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .3s,transform .3s;cursor:pointer}
+.ft-dot.active{background:var(--orange-light);transform:scale(1.3)}
+/* nav buttons */
+.ft-carousel-nav{position:absolute;bottom:0;left:50%;transform:translateX(-50%);display:flex;gap:.6rem}
+.ft-nav-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--soft);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .3s,background .3s,color .3s;font-size:1rem}
+.ft-nav-btn:hover{border-color:var(--orange-light);background:rgba(255,143,0,.06);color:var(--orange-light)}
+
+/* Video */
+.ft-video-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--border);background:#0d0d0d;margin:2rem auto 0;max-width:380px}
+.ft-video-inner{position:relative;aspect-ratio:9/19}
+.ft-video{width:100%;height:100%;object-fit:cover;display:block}
+.ft-video-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 70%,rgba(10,10,10,.4) 100%);pointer-events:none}
+.ft-video-fallback{display:none;flex-direction:column;align-items:center;justify-content:center;position:absolute;inset:0;text-align:center}
+.vid-error .ft-video{display:none}
+.vid-error .ft-video-fallback{display:flex}
+.ft-video-caption{display:flex;align-items:center;gap:.7rem;padding:.85rem 1.3rem;border-top:1px solid var(--border);font-size:.7rem;color:var(--soft);justify-content:center}
+.ftvc-dot{width:7px;height:7px;border-radius:50%;background:var(--orange-light);flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+@media(max-width:900px){
+  .two-col,.challenges{grid-template-columns:1fr;gap:3rem}
+  .two-col.rev{direction:ltr}
+  .rank-grid,.tech-grid{grid-template-columns:1fr 1fr}
+  .insights-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .rank-grid,.tech-grid,.insights-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body style="background:var(--bg)">
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- 3D BG CANVAS -->
+<canvas id="bg-canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-back"><i class="ph ph-arrow-left"></i> Back to Portfolio</a>
+  <a href="index.html" class="nav-logo">Zaid.</a>
+  <span class="nav-tag">Case Study</span>
+</nav>
+
+<section class="cs-hero" style="background:transparent">
+  <div class="hero-glow-orange"></div>
+  <div class="hero-glow-amber"></div>
+  <div class="hero-rings">
+    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="190" stroke="white" stroke-width="1"/>
+      <circle cx="200" cy="200" r="140" stroke="white" stroke-width="1"/>
+      <circle cx="200" cy="200" r="90" stroke="white" stroke-width="1"/>
+      <circle cx="200" cy="200" r="40" stroke="white" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="cs-hero-content">
+    <p class="cs-eyebrow">Case Study · Mobile / Wellbeing Tech</p>
+    <h1 class="cs-hero-title">Fit<span>Time</span><br/>Digital Wellbeing</h1>
+    <p class="cs-hero-summary">The app that turns screen addiction into a fitness habit. Users must complete real exercises — tracked in real-time by Vision AI pose detection — to unlock distracting apps. A physical paywall that actually works.</p>
+    <div class="cs-hero-meta">
+      <div><div class="meta-label">Platform</div><div class="meta-value">Flutter · Android & iOS</div></div>
+      <div><div class="meta-label">AI</div><div class="meta-value">Google ML Kit Pose Detection</div></div>
+      <div><div class="meta-label">Role</div><div class="meta-value">Design + Development</div></div>
+      <div><div class="meta-label">Category</div><div class="meta-value">Health · Productivity</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-body">
+
+<!-- PROBLEM -->
+<div class="cs-section">
+  <div class="two-col">
+    <div>
+      <p class="label">The Problem</p>
+      <h2 class="cs-title">Screen blockers don't actually work</h2>
+      <p class="cs-body-text">80% of people feel guilty about their screen time but lack the willpower to stop. Existing solutions like Forest gamify avoidance, and StayFree tracks usage — but none introduce a meaningful "cost" for opening a distracting app.
+      <br/><br/>The result? Blockers get bypassed in seconds. People need friction that feels rewarding — not punishment, but a trade. FitTime flips the model: the cost of distraction is physical exercise, and the reward is screen time you genuinely earned.</p>
+    </div>
+    <div class="col-visual">
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-top"><div class="phone-notch"></div></div>
+          <div class="phone-body">
+            <div class="phone-header">Blocked Apps</div>
+            <div class="app-row">
+              <div class="app-icon blocked">📱</div>
+              <div class="app-icon blocked">🎵</div>
+              <div class="app-icon blocked">📸</div>
+              <div class="app-icon active">⚙️</div>
+            </div>
+            <div class="app-row">
+              <div class="app-icon blocked">🎮</div>
+              <div class="app-icon blocked">🐦</div>
+              <div class="app-icon active">📞</div>
+              <div class="app-icon active">📧</div>
+            </div>
+            <div class="phone-divider"></div>
+            <div class="rep-count">47</div>
+            <div class="rep-label">Total Reps Today</div>
+            <div class="earn-btn">+ Earn Time</div>
+          </div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:.72rem;color:var(--soft);line-height:1.6;margin-bottom:.8rem">Apps blocked until you earn time through exercise</div>
+          <div style="display:flex;flex-direction:column;gap:.5rem">
+            <div style="background:rgba(230,81,0,0.08);border:1px solid rgba(230,81,0,0.2);border-radius:6px;padding:.55rem .75rem;font-size:.7rem;color:var(--orange)">🔒 Instagram — 15 push-ups</div>
+            <div style="background:rgba(230,81,0,0.08);border:1px solid rgba(230,81,0,0.2);border-radius:6px;padding:.55rem .75rem;font-size:.7rem;color:var(--orange)">🔒 TikTok — 20 sit-ups</div>
+            <div style="background:rgba(46,125,50,0.08);border:1px solid rgba(46,125,50,0.2);border-radius:6px;padding:.55rem .75rem;font-size:.7rem;color:#2E7D32">✅ YouTube — earned (10 min)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- SOLUTION -->
+<div class="cs-section">
+  <div class="two-col rev">
+    <div>
+      <p class="label">The Solution</p>
+      <h2 class="cs-title">A physical paywall powered by Vision AI</h2>
+      <p class="cs-body-text">FitTime integrates Google ML Kit Pose Detection to count reps in real-time through the phone camera. No wearable needed. The AI watches your body as you do push-ups or sit-ups, counts each valid rep, and unlocks the blocked app once the quota is met.
+      <br/><br/>The Android Accessibility Service handles robust app-blocking at the OS level — not just a timer overlay. Combined with a gamified rank system, the app creates a positive feedback loop: more reps = better rank = more rewards.</p>
+    </div>
+    <div class="col-visual">
+      <div style="width:80%;display:flex;flex-direction:column;gap:.8rem">
+        <div style="text-align:center;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-bottom:.3rem">Vision AI Rep Counter</div>
+        <div style="background:#0a0a0a;border-radius:12px;padding:1.2rem;display:flex;flex-direction:column;align-items:center;gap:.8rem">
+          <div style="width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,143,0,0.4);display:flex;align-items:center;justify-content:center;position:relative">
+            <div style="font-family:var(--fd);font-size:1.8rem;font-weight:800;color:var(--orange-light)">12</div>
+            <div style="position:absolute;inset:-4px;border-radius:50%;border:1px dashed rgba(255,143,0,0.2)"></div>
+          </div>
+          <div style="font-size:.65rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.2em">Reps detected</div>
+          <div style="width:100%;background:rgba(255,255,255,0.06);border-radius:6px;height:4px;overflow:hidden">
+            <div style="width:60%;height:100%;background:linear-gradient(to right,var(--orange),var(--orange-light));border-radius:6px"></div>
+          </div>
+          <div style="font-size:.65rem;color:rgba(255,255,255,0.35)">12 / 20 push-ups to unlock</div>
+          <div style="background:rgba(255,143,0,0.1);border:1px solid rgba(255,143,0,0.25);border-radius:6px;padding:.5rem .8rem;font-size:.62rem;color:rgba(255,143,0,0.8);text-align:center">📡 ML Kit detecting pose landmarks in real-time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- RANK SYSTEM -->
+<div class="cs-section">
+  <p class="label">Gamification</p>
+  <h2 class="cs-title">Rank system & rewards</h2>
+  <p class="cs-body-text">Progress through four ranks based on total lifetime reps. Each rank unlocks exclusive rewards — custom avatars, new themes, priority support, and exclusive badges.</p>
+  <div class="rank-grid">
+    <div class="rank-card beginner">
+      <div class="rank-badge b">🌱</div>
+      <div class="rank-name">Beginner</div>
+      <div class="rank-reps">0 Reps</div>
+      <div class="rank-reward">Custom Avatars</div>
+    </div>
+    <div class="rank-card intermediate">
+      <div class="rank-badge i"><i class="ph ph-lightning-slash"></i></div>
+      <div class="rank-name">Intermediate</div>
+      <div class="rank-reps">100+ Reps</div>
+      <div class="rank-reward">New Dashboard Themes</div>
+    </div>
+    <div class="rank-card advanced">
+      <div class="rank-badge a"><i class="ph ph-barbell"></i></div>
+      <div class="rank-name">Advanced</div>
+      <div class="rank-reps">500+ Reps</div>
+      <div class="rank-reward">Priority Support</div>
+    </div>
+    <div class="rank-card master">
+      <div class="rank-badge m">👑</div>
+      <div class="rank-name">Master</div>
+      <div class="rank-reps">2000+ Reps</div>
+      <div class="rank-reward" style="color:var(--orange-light)">Exclusive Badges</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- DEVELOPMENT PROCESS -->
+<div class="cs-section">
+  <p class="label">Development Process</p>
+  <h2 class="cs-title">Design → Build → Ship</h2>
+  <div class="process-timeline">
+    <div class="pt-item"><div class="pt-dot"><i class="ph ph-pencil"></i></div><div class="pt-content"><div class="pt-label">Design</div><div class="pt-name">UX Research & Onboarding Flow</div><div class="pt-desc">Mapped 5-step onboarding: Name → Method → Exercise → Habit Survey → Goal. Dark-themed premium aesthetic with modular component architecture. Solved small-screen scrolling with SingleChildScrollView and bottom-anchored CTAs.</div></div></div>
+    <div class="pt-item"><div class="pt-dot"><i class="ph ph-camera"></i></div><div class="pt-content"><div class="pt-label">Vision AI</div><div class="pt-name">ML Kit Pose Detection Integration</div><div class="pt-desc">Google ML Kit Pose Detection detects 33 body landmarks per frame. Custom rep-counting algorithm analyzes elbow, shoulder, and hip angles to validate push-up and sit-up form. Optimized for 30fps on mid-range Android devices.</div></div></div>
+    <div class="pt-item"><div class="pt-dot"><i class="ph ph-lock"></i></div><div class="pt-content"><div class="pt-label">Native Bridge</div><div class="pt-name">Android Accessibility Service</div><div class="pt-desc">Implemented a foreground Accessibility Service that monitors the currently active app window. When a blocked app is detected, the service fires an overlay with the exercise unlock screen. Handled Play Protect warnings and ensured service persistence across device restarts.</div></div></div>
+    <div class="pt-item"><div class="pt-dot"><i class="ph ph-rocket-launch"></i></div><div class="pt-content"><div class="pt-label">Deployment</div><div class="pt-name">CI/CD & App Store Prep</div><div class="pt-desc">GitHub Actions automated Flutter builds for both Android (APK + AAB) and iOS (Xcode archive). Configured code signing, provisioning profiles, and ML pipeline optimization for Apple's Neural Engine.</div></div></div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- TECH STACK -->
+<div class="cs-section">
+  <p class="label">Tech Stack</p>
+  <h2 class="cs-title">Built for performance</h2>
+  <div class="tech-grid">
+    <div class="tech-card"><div class="tech-icon"><i class="ph ph-device-mobile"></i></div><div class="tech-name">Flutter & Dart</div><div class="tech-desc">Cross-platform mobile development with a single codebase</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ph ph-arrows-clockwise"></i></div><div class="tech-name">Provider</div><div class="tech-desc">Clean reactive state management architecture</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ph ph-eye"></i></div><div class="tech-name">Google ML Kit</div><div class="tech-desc">Real-time pose detection for rep counting</div></div>
+    <div class="tech-card"><div class="tech-icon"><i class="ph ph-lock"></i></div><div class="tech-name">Accessibility API</div><div class="tech-desc">Android-level app blocking via native service bridge</div></div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- CHALLENGES & FIXES -->
+<div class="cs-section">
+  <p class="label">Testing & Iteration</p>
+  <h2 class="cs-title">Real bugs, real solutions</h2>
+  <div class="challenges">
+    <div class="challenge-card"><div class="ch-icon"><i class="ph ph-bug"></i></div><div><div class="ch-tag">Bug</div><div class="ch-problem">UI Misalignment on small screens</div><div class="ch-solution">Resolved by replacing fixed-size containers with Flexible and Expanded widgets, ensuring dynamic centering across all screen sizes.</div></div></div>
+    <div class="challenge-card"><div class="ch-icon"><i class="ph ph-eye-slash"></i></div><div><div class="ch-tag">Bug</div><div class="ch-problem">Missing "Continue" button on small devices</div><div class="ch-solution">Wrapped onboarding in SingleChildScrollView with bottom-anchored actions — button always visible regardless of content height.</div></div></div>
+    <div class="challenge-card"><div class="ch-icon"><i class="ph ph-shield-warning"></i></div><div><div class="ch-tag">Challenge</div><div class="ch-problem">Play Protect warnings on sideloaded builds</div><div class="ch-solution">Implemented proper APK signing and Play Protect whitelisting guidance in onboarding to reduce user drop-off during setup.</div></div></div>
+    <div class="challenge-card"><div class="ch-icon"><i class="ph ph-device-mobile"></i></div><div><div class="ch-tag">Challenge</div><div class="ch-problem">Accessibility Service killed in background</div><div class="ch-solution">Added persistent foreground notification, battery optimization exemption prompt, and auto-restart broadcast receiver for device reboots.</div></div></div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- RESEARCH INSIGHTS -->
+<div class="cs-section">
+  <p class="label">Research & Impact</p>
+  <h2 class="cs-title">Data behind the design</h2>
+  <div class="insights-grid">
+    <div class="insight-card"><div class="insight-icon"><i class="ph ph-smiley-sad"></i></div><div class="insight-stat">80%</div><div class="insight-label">of users felt guilty about their screen time but lacked willpower to stop</div></div>
+    <div class="insight-card"><div class="insight-icon"><i class="ph ph-x-circle"></i></div><div class="insight-stat">3× faster</div><div class="insight-label">bypass rate for timer-only blockers vs. FitTime's physical paywall system</div></div>
+    <div class="insight-card"><div class="insight-icon"><i class="ph ph-heart"></i></div><div class="insight-stat">Physical cost</div><div class="insight-label">raises the "price" of distraction, making users more mindful of digital choices</div></div>
+  </div>
+</div>
+
+</div>
+
+<div class="sec-line"></div>
+
+<!-- APP SHOWCASE — Cinematic Carousel + Video -->
+<div class="cs-section ft-showcase">
+  <p class="label">App Showcase</p>
+  <h2 class="cs-title">15 screens. One habit loop.</h2>
+  <p class="cs-body-text" style="max-width:600px;margin-bottom:3.5rem">Every screen designed to feel earned — from the moment you block an app to the moment you unlock it through sweat.</p>
+
+  <!-- Floating fitness vectors -->
+  <div class="ft-floats" aria-hidden="true">
+    <svg class="ft-vec ft-v1" viewBox="0 0 80 40" fill="none"><rect x="0" y="16" width="80" height="8" rx="4" fill="rgba(255,143,0,0.18)"/><rect x="2" y="8" width="14" height="24" rx="7" fill="rgba(255,143,0,0.12)"/><rect x="64" y="8" width="14" height="24" rx="7" fill="rgba(255,143,0,0.12)"/></svg>
+    <svg class="ft-vec ft-v2" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="rgba(255,143,0,0.2)" stroke-width="2"/><circle cx="22" cy="22" r="14" stroke="rgba(255,143,0,0.12)" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="22" cy="22" r="5" fill="rgba(255,143,0,0.25)"/></svg>
+    <svg class="ft-vec ft-v3" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(255,143,0,0.15)" stroke-width="2"/><path d="M30 8 A22 22 0 0 1 52 30" stroke="rgba(255,143,0,0.5)" stroke-width="3" stroke-linecap="round"/><line x1="30" y1="30" x2="30" y2="10" stroke="rgba(255,143,0,0.6)" stroke-width="2" stroke-linecap="round"/><line x1="30" y1="30" x2="44" y2="30" stroke="rgba(255,143,0,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <svg class="ft-vec ft-v4" viewBox="0 0 48 60" fill="none"><ellipse cx="24" cy="12" rx="10" ry="12" stroke="rgba(255,143,0,0.2)" stroke-width="1.5"/><rect x="20" y="24" width="8" height="22" rx="2" fill="rgba(255,143,0,0.1)" stroke="rgba(255,143,0,0.2)" stroke-width="1"/><ellipse cx="24" cy="50" rx="8" ry="8" stroke="rgba(255,143,0,0.15)" stroke-width="1.5"/></svg>
+    <svg class="ft-vec ft-v5" viewBox="0 0 60 50" fill="none"><polyline points="2,45 12,20 22,35 32,10 42,28 52,5 58,15" stroke="rgba(255,143,0,0.4)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Phone Carousel -->
+  <div class="ft-carousel-wrap" id="ftCarousel">
+    <div class="ft-carousel-track" id="ftTrack">
+      <!-- 15 phone frames built by JS -->
+    </div>
+    <div class="ft-carousel-dots" id="ftDots"></div>
+    <div class="ft-carousel-nav">
+      <button class="ft-nav-btn" id="ftPrev"><i class="ph ph-caret-left"></i></button>
+      <button class="ft-nav-btn" id="ftNext"><i class="ph ph-caret-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Demo Video -->
+  <div class="ft-video-wrap" id="ftVideoWrap">
+    <div class="ft-video-inner">
+      <video id="ftVideo" src="./assets/fittime-app/app-video.mp4"
+             autoplay muted loop playsinline class="ft-video"
+             onerror="this.closest('.ft-video-wrap').classList.add('vid-error')"></video>
+      <div class="ft-video-overlay"></div>
+      <div class="ft-video-fallback">
+        <i class="ph ph-video-camera-slash" style="font-size:2rem;color:var(--orange-light);margin-bottom:.6rem"></i>
+        <span style="font-size:.78rem;color:var(--soft)">Add video at:</span>
+        <code style="font-size:.7rem;color:var(--orange-light);margin-top:.25rem">./assets/fittime-app/app-video.mp4</code>
+      </div>
+    </div>
+    <div class="ft-video-caption">
+      <span class="ftvc-dot"></span>
+      FitTime · Full app demo — exercise detection, app unlock, rank progression
+    </div>
+  </div>
+</div>
+
+<div class="cs-conclusion">
+  <div class="conc-glow"></div>
+  <p class="conclusion-text" id="cText">FitTime proves that the best habit apps don't just restrict behavior — they <em>replace it</em> with something better.</p>
+  <p class="conclusion-sub" id="cSub">A portfolio-ready showcase of Vision AI, native Android integration, gamification design, and cross-platform Flutter development.</p>
+  <a href="index.html#contact" class="btn-orange" id="cBtn"><i class="ph ph-paper-plane-tilt"></i> Work with Zaid</a>
+</div>
+
+<div class="cs-footer">
+  <a href="case-dispatch.html">← DispatchAI Case Study</a>
+  <span style="font-size:.75rem;color:var(--soft)">&copy; 2025 Zaid</span>
+  <a href="index.html">Back to Portfolio →</a>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cursor.style.left=mx+'px';cursor.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+
+// ── 3D FLOATING LIGHT OBJECTS (WebGL) ──
+(function initBG(){
+  const canvas=document.getElementById('bg-canvas');
+  const gl=canvas.getContext('webgl',{alpha:true,antialias:true});
+  if(!gl)return;
+  function resize(){canvas.width=innerWidth;canvas.height=innerHeight;gl.viewport(0,0,canvas.width,canvas.height)}
+  resize();window.addEventListener('resize',resize);
+  const vsrc=`attribute vec2 a_pos;void main(){gl_Position=vec4(a_pos,0.,1.);}`;
+  const fsrc=`precision highp float;uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;vec3 orb(vec2 uv,vec2 center,float size,float t){vec2 d=uv-center;float dist=length(d);float g=exp(-dist*dist/(size*size*2.0));float pulse=0.85+0.15*sin(t*1.2);return vec3(g*pulse*0.6);}void main(){vec2 uv=(gl_FragCoord.xy/u_res)*2.-1.;uv.x*=u_res.x/u_res.y;float t=u_time;vec2 o1=vec2(cos(t*0.23)*0.6,sin(t*0.17)*0.4);vec2 o2=vec2(sin(t*0.19)*0.5+0.3,cos(t*0.28)*0.5-0.1);vec2 o3=vec2(cos(t*0.15)*0.4-0.4,sin(t*0.22)*0.35+0.3);vec2 o4=vec2(sin(t*0.27)*0.35+0.1,cos(t*0.13)*0.45-0.35);vec3 col=vec3(0.);col+=orb(uv,o1,0.38,t*1.1);col+=orb(uv,o2,0.30,t*0.9+1.2);col+=orb(uv,o3,0.25,t*1.3+2.4);col+=orb(uv,o4,0.20,t*0.8+0.7);vec2 mouse=u_mouse/u_res*2.-1.;mouse.x*=u_res.x/u_res.y;float md=length(uv-mouse);col+=vec3(exp(-md*md/0.08)*0.12);col=clamp(col,0.,1.)*vec3(1.,1.,1.);gl_FragColor=vec4(col,col.r*0.7);}`;
+  function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s}
+  const prog=gl.createProgram();gl.attachShader(prog,shader(gl.VERTEX_SHADER,vsrc));gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,fsrc));gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(prog,'a_pos');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const uRes=gl.getUniformLocation(prog,'u_res'),uTime=gl.getUniformLocation(prog,'u_time'),uMouse=gl.getUniformLocation(prog,'u_mouse');
+  gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+  let mx2=innerWidth/2,my2=innerHeight/2;document.addEventListener('mousemove',e=>{mx2=e.clientX;my2=e.clientY});
+  let start=null;function frame(ts){if(!start)start=ts;const t=(ts-start)/1000;gl.clear(gl.COLOR_BUFFER_BIT);gl.uniform2f(uRes,canvas.width,canvas.height);gl.uniform1f(uTime,t);gl.uniform2f(uMouse,mx2,canvas.height-my2);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);requestAnimationFrame(frame)}requestAnimationFrame(frame);
+})();
+
+gsap.timeline({delay:.3})
+  .fromTo('.cs-eyebrow',{opacity:0,y:20},{opacity:1,y:0,duration:.6,ease:'power2.out'})
+  .fromTo('.cs-hero-title',{opacity:0,y:60,filter:'blur(12px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1,ease:'power2.out'},'-=.3')
+  .fromTo('.cs-hero-summary',{opacity:0,y:30},{opacity:1,y:0,duration:.7},'-=.4')
+  .fromTo('.cs-hero-meta',{opacity:0,y:20},{opacity:1,y:0,duration:.6},'-=.3');
+
+function sr(el,props,trig){gsap.fromTo(el,{opacity:0,y:35,filter:'blur(5px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.75,ease:'power2.out',...props,scrollTrigger:{trigger:trig||el,start:'top 88%',toggleActions:'play none none none'}})}
+document.querySelectorAll('.label').forEach(e=>sr(e,{}));
+document.querySelectorAll('.cs-title').forEach(e=>sr(e,{delay:.08}));
+document.querySelectorAll('.cs-body-text').forEach(e=>sr(e,{delay:.15}));
+document.querySelectorAll('.col-visual').forEach(e=>sr(e,{x:40,duration:.9}));
+gsap.fromTo('.rank-card',{opacity:0,y:35,scale:.93},{opacity:1,y:0,scale:1,stagger:.1,duration:.65,ease:'back.out(1.3)',scrollTrigger:{trigger:'.rank-grid',start:'top 85%'}});
+gsap.fromTo('.pt-item',{opacity:0,x:-30},{opacity:1,x:0,stagger:.13,duration:.65,ease:'power2.out',scrollTrigger:{trigger:'.process-timeline',start:'top 85%'}});
+gsap.fromTo('.tech-card',{opacity:0,y:30},{opacity:1,y:0,stagger:.09,duration:.55,ease:'power2.out',scrollTrigger:{trigger:'.tech-grid',start:'top 85%'}});
+gsap.fromTo('.challenge-card',{opacity:0,y:25},{opacity:1,y:0,stagger:.1,duration:.6,ease:'power2.out',scrollTrigger:{trigger:'.challenges',start:'top 85%'}});
+gsap.fromTo('.insight-card',{opacity:0,y:30,scale:.95},{opacity:1,y:0,scale:1,stagger:.1,duration:.6,ease:'back.out(1.2)',scrollTrigger:{trigger:'.insights-grid',start:'top 85%'}});
+sr('#cText',{duration:.9},'#cText');
+sr('#cSub',{delay:.15},'.cs-conclusion');
+sr('#cBtn',{delay:.3},'.cs-conclusion');
+
+// ── FitTime Phone Carousel ──
+(function(){
+  const SCREENS=[
+    'Splash / Onboarding','App Selection','Exercise Setup','Habit Survey',
+    'Goal Setting','Home Dashboard','Blocked App Warning','Rep Counter',
+    'Live Pose Detection','Workout Complete','App Unlocked','Rank Progress',
+    'Leaderboard','Settings','Analytics & Streaks'
+  ];
+  const track=document.getElementById('ftTrack');
+  const dotsWrap=document.getElementById('ftDots');
+  if(!track)return;
+
+  // Build phones
+  SCREENS.forEach((label,i)=>{
+    const phone=document.createElement('div');
+    phone.className='ft-phone'+(i===0?' active':'');
+    phone.innerHTML=`
+      <div class="ft-phone-top"><div class="ft-phone-notch"></div></div>
+      <div class="ft-phone-screen">
+        <img src="./assets/fittime-app/${i+1}.jpeg" alt="Screen ${i+1}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ft-phone-fallback" style="display:none">
+          <i class="ph ph-device-mobile"></i>
+          <span>${i+1}.jpeg</span>
+        </div>
+      </div>`;
+    track.appendChild(phone);
+    // dot
+    const dot=document.createElement('div');
+    dot.className='ft-dot'+(i===0?' active':'');
+    dot.addEventListener('click',()=>goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+
+  let current=0;
+  const phones=track.querySelectorAll('.ft-phone');
+  const dots=dotsWrap.querySelectorAll('.ft-dot');
+  const VISIBLE=5;
+
+  function goTo(idx){
+    phones[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current=(idx+SCREENS.length)%SCREENS.length;
+    phones[current].classList.add('active');
+    dots[current].classList.add('active');
+    // center active phone
+    const phoneW=150+19; // width + gap
+    const wrapW=track.parentElement.offsetWidth;
+    const offset=current*phoneW-(wrapW/2)+(phoneW/2);
+    track.style.transform=`translateX(${-Math.max(0,offset)}px)`;
+  }
+
+  document.getElementById('ftNext').addEventListener('click',()=>goTo(current+1));
+  document.getElementById('ftPrev').addEventListener('click',()=>goTo(current-1));
+
+  // auto-advance
+  let timer=setInterval(()=>goTo(current+1),3200);
+  track.parentElement.addEventListener('mouseenter',()=>clearInterval(timer));
+  track.parentElement.addEventListener('mouseleave',()=>{timer=setInterval(()=>goTo(current+1),3200)});
+
+  // Animate showcase section on scroll
+  gsap.fromTo('.ft-carousel-wrap',{opacity:0,y:60},{opacity:1,y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.ft-carousel-wrap',start:'top 88%'}});
+  gsap.fromTo('.ft-video-wrap',{opacity:0,y:40},{opacity:1,y:0,duration:.9,ease:'power2.out',scrollTrigger:{trigger:'.ft-video-wrap',start:'top 88%'}});
+  // floating vecs
+  gsap.fromTo('.ft-vec',{opacity:0},{opacity:1,stagger:.12,duration:1,scrollTrigger:{trigger:'.ft-showcase',start:'top 80%'}});
+})();
+
+// Video IO
+(function(){
+  const v=document.getElementById('ftVideo');
+  if(!v)return;
+  new IntersectionObserver(e=>{e[0].isIntersecting?v.play():v.pause()},{threshold:.25}).observe(v);
+})();
+</script>
+</body>
+</html>

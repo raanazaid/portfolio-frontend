@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DispatchAI — AI Calling Agent · Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--ink:#ffffff;--mid:#ccc;--soft:#888;--faint:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.08);
+  --blue:#1565C0;--blue-light:#BBDEFB;--blue-glow:rgba(187,222,251,0.3);
+  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none}
+.cursor{position:fixed;width:10px;height:10px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,0,0,0.25);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:54px;height:54px;border-color:var(--blue)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-back{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);text-decoration:none;transition:color .3s}
+.nav-back:hover{color:var(--blue)}
+.nav-back i{font-size:1rem}
+.nav-logo{font-family:var(--fd);font-size:1.1rem;font-weight:800;letter-spacing:-.04em;color:var(--ink);text-decoration:none}
+.nav-tag{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+
+/* HERO — dark, techy */
+.cs-hero{min-height:100vh;background:#060810;display:flex;flex-direction:column;justify-content:flex-end;padding:0 5vw 6rem;position:relative;overflow:hidden}
+.hero-grid-bg{position:absolute;inset:0;opacity:.06;background-image:linear-gradient(rgba(100,149,237,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(100,149,237,0.5) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:-20%;left:-10%;width:70%;height:100%;background:radial-gradient(ellipse at 30% 40%,rgba(21,101,192,0.15),transparent 60%);pointer-events:none}
+.hero-glow2{position:absolute;bottom:-10%;right:-5%;width:50%;height:60%;background:radial-gradient(ellipse at 70% 60%,rgba(100,149,237,0.1),transparent 60%);pointer-events:none}
+.cs-hero-content{position:relative;z-index:2;max-width:900px}
+.cs-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;color:var(--blue-light);margin-bottom:1.8rem;opacity:0}
+.cs-eyebrow::before{content:'';width:22px;height:1px;background:var(--blue-light)}
+.cs-hero-title{font-family:var(--fd);font-size:clamp(3rem,7vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:1.6rem;opacity:0}
+.cs-hero-title span{color:var(--blue-light)}
+.cs-hero-summary{font-size:clamp(.92rem,1.4vw,1.05rem);line-height:1.8;color:rgba(255,255,255,0.5);max-width:600px;opacity:0}
+.cs-hero-meta{display:flex;gap:3rem;margin-top:3rem;flex-wrap:wrap;opacity:0}
+.meta-label{font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:.3rem}
+.meta-value{font-size:.88rem;color:rgba(255,255,255,0.72)}
+
+.cs-body{background:transparent}
+.cs-section{padding:8rem 5vw;max-width:1200px;margin:0 auto}
+.cs-section-sm{padding:5rem 5vw;max-width:1200px;margin:0 auto}
+.label{font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;display:flex;align-items:center;gap:.7rem;opacity:0}
+.label::before{content:'';width:16px;height:1px;background:var(--blue)}
+.cs-title{font-family:var(--fd);font-size:clamp(1.8rem,3.5vw,3rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin-bottom:1.4rem;color:var(--ink);opacity:0}
+.cs-body-text{font-size:.93rem;line-height:1.85;color:rgba(255,255,255,0.6);opacity:0}
+.sec-line{width:100%;height:1px;background:var(--border)}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.two-col.rev{direction:rtl}
+.two-col.rev>*{direction:ltr}
+.col-visual{background:var(--faint);border-radius:16px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;opacity:0}
+
+/* DASHBOARD MOCK */
+.dash-mock{width:88%;height:88%;background:#07090f;border-radius:10px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.3)}
+.dash-top{background:#0d1117;height:38px;display:flex;align-items:center;padding:0 12px;gap:8px;border-bottom:1px solid rgba(100,149,237,0.1)}
+.dash-top-dot{width:7px;height:7px;border-radius:50%}
+.dash-top-title{font-size:.65rem;color:rgba(255,255,255,0.35);margin-left:4px;letter-spacing:.1em;text-transform:uppercase}
+.dash-body{padding:12px;display:flex;flex-direction:column;gap:8px}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.kpi{background:rgba(255,255,255,0.04);border:1px solid rgba(100,149,237,0.12);border-radius:6px;padding:8px;text-align:center}
+.kpi-num{font-family:var(--fd);font-size:.95rem;font-weight:700;color:var(--blue-light)}
+.kpi-lbl{font-size:.5rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+.call-banner{background:rgba(21,101,192,0.15);border:1px solid rgba(100,149,237,0.25);border-radius:6px;padding:8px 10px;display:flex;align-items:center;gap:8px}
+.call-dot{width:6px;height:6px;border-radius:50%;background:#4CAF50;animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.call-text{font-size:.6rem;color:rgba(255,255,255,0.55)}
+.call-text strong{color:var(--blue-light);font-weight:500}
+.waveform{display:flex;align-items:center;gap:2px;margin-left:auto}
+.wav-bar{width:2px;border-radius:2px;background:var(--blue-light);animation:wave .8s ease-in-out infinite}
+.wav-bar:nth-child(1){height:8px;animation-delay:0s}
+.wav-bar:nth-child(2){height:14px;animation-delay:.1s}
+.wav-bar:nth-child(3){height:10px;animation-delay:.2s}
+.wav-bar:nth-child(4){height:16px;animation-delay:.15s}
+.wav-bar:nth-child(5){height:8px;animation-delay:.05s}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.6)}}
+
+/* ARCHITECTURE */
+.arch-layers{display:flex;flex-direction:column;gap:1rem;margin-top:2.5rem;opacity:0}
+.arch-layer{background:var(--faint);border:1px solid var(--border);border-radius:10px;padding:1.4rem 1.8rem;display:flex;align-items:center;gap:1.5rem;transition:border-color .3s,box-shadow .3s}
+.arch-layer:hover{border-color:var(--blue-light);box-shadow:0 4px 20px rgba(21,101,192,0.06)}
+.al-icon{width:40px;height:40px;border-radius:8px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue);font-size:1.1rem}
+.al-name{font-family:var(--fd);font-size:.95rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.25rem}
+.al-tech{font-size:.78rem;color:var(--soft)}
+.al-badge{margin-left:auto;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .6rem;border-radius:4px;background:var(--blue-light);color:var(--blue);flex-shrink:0}
+
+/* PROCESS */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:2.5rem}
+.proc-card{background:var(--faint);border:1px solid var(--border);border-radius:12px;padding:1.6rem;opacity:0;position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.proc-card:hover{border-color:var(--blue-light);box-shadow:0 8px 28px rgba(21,101,192,0.07)}
+.proc-num{font-family:var(--fd);font-size:3.5rem;font-weight:800;color:rgba(0,0,0,0.04);position:absolute;top:-8px;right:10px}
+.proc-icon{width:36px;height:36px;border-radius:8px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;color:var(--blue);font-size:1rem}
+.proc-label{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:.4rem}
+.proc-name{font-family:var(--fd);font-size:.95rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem}
+.proc-desc{font-size:.78rem;line-height:1.6;color:var(--soft)}
+
+/* UI SHOWCASE */
+.ui-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem}
+.ui-card{background:#07090f;border:1px solid rgba(100,149,237,0.15);border-radius:12px;padding:1.6rem;opacity:0;transition:border-color .3s,transform .3s}
+.ui-card:hover{border-color:rgba(100,149,237,0.4);transform:translateY(-4px)}
+.ui-card:first-child{grid-column:span 2}
+.ui-icon{font-size:1.8rem;color:var(--blue-light);margin-bottom:.8rem}
+.ui-name{font-family:var(--fd);font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.ui-desc{font-size:.78rem;line-height:1.6;color:rgba(255,255,255,0.4)}
+
+/* RESULTS */
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
+.result-card{background:var(--faint);border:1px solid var(--border);border-radius:12px;padding:1.8rem;text-align:center;opacity:0;transition:border-color .3s}
+.result-card:hover{border-color:var(--blue-light)}
+.result-icon{width:44px;height:44px;border-radius:10px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;margin:0 auto .9rem;color:var(--blue);font-size:1.3rem}
+.result-num{font-family:var(--fd);font-size:1.9rem;font-weight:800;letter-spacing:-.04em;margin-bottom:.3rem}
+.result-label{font-size:.78rem;color:var(--soft);line-height:1.5}
+
+/* ROADMAP */
+.roadmap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.5rem}
+.road-item{display:flex;gap:1rem;align-items:flex-start;background:var(--faint);border:1px solid var(--border);border-radius:10px;padding:1.2rem;opacity:0;transition:border-color .3s}
+.road-item:hover{border-color:var(--blue-light)}
+.road-dot{width:8px;height:8px;border-radius:50%;background:var(--blue-light);margin-top:.35rem;flex-shrink:0}
+.road-text{font-size:.85rem;color:var(--mid);line-height:1.6}
+
+/* CONCLUSION */
+.cs-conclusion{background:#060810;padding:8rem 5vw;text-align:center;position:relative;overflow:hidden}
+.cs-conclusion::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(100,149,237,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(100,149,237,0.04) 1px,transparent 1px);background-size:60px 60px}
+.conclusion-text{font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.8rem);font-weight:700;letter-spacing:-.03em;line-height:1.3;max-width:900px;margin:0 auto 2rem;color:#fff;position:relative;opacity:0}
+.conclusion-text em{color:var(--blue-light);font-style:normal}
+.conclusion-sub{font-size:.93rem;color:rgba(255,255,255,0.4);max-width:480px;margin:0 auto 2.5rem;line-height:1.7;position:relative;opacity:0}
+.btn-blue{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:8px;background:var(--blue);color:#fff;text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;transition:background .3s,box-shadow .3s,transform .25s;position:relative;opacity:0}
+.btn-blue:hover{background:#0d47a1;box-shadow:0 0 28px rgba(100,149,237,0.25);transform:scale(1.03)}
+
+.cs-footer{background:transparent;border-top:1px solid var(--border);padding:2.5rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem}
+.cs-footer a{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);text-decoration:none;transition:color .3s}
+.cs-footer a:hover{color:var(--blue)}
+
+/* ── DispatchAI Dashboard Showcase ───────────── */
+.da-showcase{position:relative;overflow:hidden}
+
+/* Floating SaaS vectors */
+.da-floats{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.da-vec{position:absolute;opacity:1}
+.da-v1{width:70px;top:6%;left:2%;animation:da-flt1 8s ease-in-out infinite}
+.da-v2{width:50px;top:12%;right:3%;animation:da-flt2 10s ease-in-out infinite}
+.da-v3{width:60px;bottom:35%;left:1.5%;animation:da-flt1 9s ease-in-out infinite reverse}
+.da-v4{width:44px;bottom:25%;right:3%;animation:da-flt2 7s ease-in-out infinite}
+.da-v5{width:48px;top:48%;right:1%;animation:da-flt1 11s ease-in-out infinite}
+@keyframes da-flt1{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-16px) rotate(5deg)}}
+@keyframes da-flt2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(12px) rotate(-4deg)}}
+
+/* Slider */
+.da-slider-container{position:relative;width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;border:1px solid var(--border);background:#0f1117;box-shadow:0 30px 80px rgba(0,0,0,0.5);margin-bottom:3rem}
+.da-slider-track{display:flex;height:100%;will-change:transform;transition:transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)}
+.da-slide{min-width:100%;height:100%;position:relative;cursor:zoom-in;overflow:hidden}
+.da-slide img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
+.da-slide:hover img{transform:scale(1.03)}
+
+.da-slider-nav{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:1.5rem;z-index:10;background:rgba(10,13,20,0.6);backdrop-filter:blur(12px);padding:0.7rem 1.4rem;border-radius:100px;border:1px solid var(--border);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.da-nav-btn{background:transparent;border:none;color:var(--mid);font-size:1.1rem;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%}
+.da-nav-btn:hover{color:var(--blue-light);background:rgba(255,255,255,0.05)}
+.da-nav-btn:active{transform:scale(0.9)}
+.da-slider-counter{font-family:var(--fd);font-size:0.85rem;font-weight:700;color:var(--ink);letter-spacing:0.1em;min-width:60px;text-align:center}
+.da-slider-counter span{color:var(--soft);font-weight:400}
+
+.da-slide-info{position:absolute;top:2.5rem;left:2.5rem;z-index:5;pointer-events:none}
+.da-slide-title{font-family:var(--fd);font-size:clamp(1.2rem,2.5vw,2rem);font-weight:800;color:#fff;text-shadow:0 4px 15px rgba(0,0,0,0.8);opacity:0;transform:translateY(20px);transition:all 0.6s cubic-bezier(0.22,1,0.36,1)}
+.da-slide.active .da-slide-title{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .da-slider-container{aspect-ratio:4/3}
+  .da-slide-info{top:1.5rem;left:1.5rem}
+}
+
+/* Video */
+.da-video-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--border);background:#0a0d14}
+.da-video-inner{position:relative;aspect-ratio:16/9}
+.da-video{width:100%;height:100%;object-fit:cover;display:block}
+.da-video-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(6,8,16,.75) 100%);pointer-events:none}
+.da-video-fallback{display:none;flex-direction:column;align-items:center;justify-content:center;position:absolute;inset:0;text-align:center}
+.vid-error .da-video{display:none}
+.vid-error .da-video-fallback{display:flex}
+.da-video-caption{display:flex;align-items:center;gap:.7rem;padding:.85rem 1.3rem;border-top:1px solid var(--border);font-size:.73rem;color:var(--soft)}
+.davc-dot{width:7px;height:7px;border-radius:50%;background:var(--blue-light);flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* Lightbox */
+.da-lightbox{display:none;position:fixed;inset:0;z-index:2000;background:rgba(6,8,16,0.92);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:2rem;cursor:zoom-out;opacity:0;transition:opacity .4s ease}
+.da-lightbox.active{display:flex;opacity:1}
+.da-lightbox-content{max-width:90%;max-height:85vh;object-fit:contain;border-radius:12px;box-shadow:0 32px 80px rgba(0,0,0,0.6);border:1px solid var(--border);transform:scale(0.9);transition:transform .4s cubic-bezier(.22,1,0.36,1)}
+.da-lightbox.active .da-lightbox-content{transform:scale(1)}
+.da-close{position:absolute;top:2rem;right:2rem;font-size:1.8rem;color:var(--mid);cursor:pointer;transition:color .3s}
+.da-close:hover{color:#fff}
+
+/* responsive */
+@media(max-width:900px){
+  .da-bento{grid-template-columns:1fr 1fr}
+  .da-card.da-wide{grid-column:span 2}
+}
+@media(max-width:600px){
+  .da-bento{grid-template-columns:1fr}
+  .da-card.da-wide{grid-column:span 1}
+}
+
+@media(max-width:900px){
+  .two-col,.roadmap{grid-template-columns:1fr;gap:3rem}
+  .two-col.rev{direction:ltr}
+  .process-grid,.results-grid{grid-template-columns:1fr 1fr}
+  .ui-grid{grid-template-columns:1fr}
+  .ui-card:first-child{grid-column:span 1}
+}
+@media(max-width:600px){
+  .process-grid,.results-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body style="background:var(--bg)">
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- 3D BG CANVAS -->
+<canvas id="bg-canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-back"><i class="ph ph-arrow-left"></i> Back to Portfolio</a>
+  <a href="index.html" class="nav-logo">Zaid.</a>
+  <span class="nav-tag">Case Study</span>
+</nav>
+
+<section class="cs-hero" style="background:transparent">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="cs-hero-content">
+    <p class="cs-eyebrow">Case Study · SaaS / AI Telephony</p>
+    <h1 class="cs-hero-title">Dispatch<span>AI</span><br/>Calling Agent</h1>
+    <p class="cs-hero-summary">A cloud-native, multi-tenant SaaS platform that automates outbound truck dispatch calling with real-time AI conversation, lead qualification, and a premium dashboard — built to scale from one dispatch company to hundreds.</p>
+    <div class="cs-hero-meta">
+      <div><div class="meta-label">Stack</div><div class="meta-value">Next.js · Express · Supabase</div></div>
+      <div><div class="meta-label">AI</div><div class="meta-value">Twilio · Deepgram · Claude · ElevenLabs</div></div>
+      <div><div class="meta-label">Role</div><div class="meta-value">Full-Stack + AI Integration</div></div>
+      <div><div class="meta-label">Model</div><div class="meta-value">Multi-tenant SaaS</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="cs-body">
+
+<!-- PROBLEM -->
+<div class="cs-section">
+  <div class="two-col">
+    <div>
+      <p class="label">The Problem</p>
+      <h2 class="cs-title">Dispatch centers waste hours on manual calls</h2>
+      <p class="cs-body-text">Truck dispatch call centers face a scaling ceiling: human agents can only dial so many brokers and drivers per day. Lead tracking is done in spreadsheets, call outcomes are forgotten, and no existing SaaS tool was built specifically for dispatch operations.
+      <br/><br/>Existing generic dialers lacked the multi-tenant isolation needed to onboard multiple dispatch companies, had no AI conversation layer, and produced UX that agents actually hated using.</p>
+    </div>
+    <div class="col-visual">
+      <div class="dash-mock">
+        <div class="dash-top">
+          <div class="dash-top-dot" style="background:#ff5f57"></div>
+          <div class="dash-top-dot" style="background:#ffbd2e"></div>
+          <div class="dash-top-dot" style="background:#28c840"></div>
+          <span class="dash-top-title">DispatchAI — Live Dashboard</span>
+        </div>
+        <div class="dash-body">
+          <div class="kpi-row">
+            <div class="kpi"><div class="kpi-num">247</div><div class="kpi-lbl">Calls Today</div></div>
+            <div class="kpi"><div class="kpi-num">68%</div><div class="kpi-lbl">Connect Rate</div></div>
+            <div class="kpi"><div class="kpi-num">34</div><div class="kpi-lbl">Qualified</div></div>
+          </div>
+          <div class="call-banner">
+            <div class="call-dot"></div>
+            <div class="call-text"><strong>AI Agent</strong> — Active call with Broker #19 · 02:14</div>
+            <div class="waveform">
+              <div class="wav-bar"></div><div class="wav-bar"></div><div class="wav-bar"></div>
+              <div class="wav-bar"></div><div class="wav-bar"></div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,.03);border:1px solid rgba(100,149,237,.1);border-radius:6px;padding:8px 10px">
+            <div style="font-size:.55rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.15em;margin-bottom:5px">Live Transcript</div>
+            <div style="font-size:.6rem;color:rgba(255,255,255,.5);line-height:1.5">"...looking for flatbed loads from Chicago to Dallas, can you confirm availability for next Tuesday?"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- SOLUTION -->
+<div class="cs-section">
+  <div class="two-col rev">
+    <div>
+      <p class="label">The Solution</p>
+      <h2 class="cs-title">Full AI calling stack, built for dispatch</h2>
+      <p class="cs-body-text">DispatchAI is a purpose-built SaaS platform for truck dispatch companies. It handles the entire outbound calling workflow autonomously: the AI dials, speaks naturally using ElevenLabs TTS, understands broker responses via Deepgram STT + Claude NLU, and qualifies leads in real-time.
+      <br/><br/>Every call is recorded, transcribed, and stored per tenant with strict Row-Level Security. The dashboard gives dispatch managers live visibility into campaign performance, leads, and call logs.</p>
+    </div>
+    <div class="col-visual">
+      <div style="width:85%;display:flex;flex-direction:column;gap:.8rem">
+        <div style="font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-bottom:.3rem">AI Conversation Flow</div>
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <div style="background:var(--blue-light);border-radius:8px;padding:.75rem 1rem;font-size:.75rem;color:var(--blue);display:flex;align-items:center;gap:.6rem"><i class="ph ph-phone-outgoing"></i> Outbound dial initiated</div>
+          <div style="width:1px;height:16px;background:var(--border);margin-left:1.2rem"></div>
+          <div style="background:var(--faint);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;font-size:.75rem;color:var(--mid);display:flex;align-items:center;gap:.6rem"><i class="ph ph-microphone" style="color:var(--blue)"></i> Deepgram STT — live transcription</div>
+          <div style="width:1px;height:16px;background:var(--border);margin-left:1.2rem"></div>
+          <div style="background:var(--faint);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;font-size:.75rem;color:var(--mid);display:flex;align-items:center;gap:.6rem"><i class="ph ph-brain" style="color:var(--blue)"></i> Claude Sonnet — intent & response</div>
+          <div style="width:1px;height:16px;background:var(--border);margin-left:1.2rem"></div>
+          <div style="background:var(--blue-light);border-radius:8px;padding:.75rem 1rem;font-size:.75rem;color:var(--blue);display:flex;align-items:center;gap:.6rem"><i class="ph ph-speaker-high"></i> ElevenLabs TTS — natural voice reply</div>
+          <div style="width:1px;height:16px;background:var(--border);margin-left:1.2rem"></div>
+          <div style="background:var(--faint);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;font-size:.75rem;color:var(--mid);display:flex;align-items:center;gap:.6rem"><i class="ph ph-database" style="color:var(--blue)"></i> Lead qualified → Supabase CRM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UI SHOWCASE -->
+<div class="cs-section">
+  <p class="label">UI/UX Showcase</p>
+  <h2 class="cs-title">SaaS aesthetics</h2>
+  <div class="ui-grid">
+    <div class="ui-card">
+      <div class="ui-icon"><i class="ph ph-squares-four"></i></div>
+      <div class="ui-name">Live Dashboard</div>
+      <div class="ui-desc">KPI cards with animated counters, active call banner with waveform, real-time transcript viewer, campaign progress bars, and chart widgets for hourly call volume.</div>
+    </div>
+    <div class="ui-card">
+      <div class="ui-icon"><i class="ph ph-sign-in"></i></div>
+      <div class="ui-name">Login — Split Screen</div>
+      <div class="ui-desc">Dark split-screen with glowing gradient animation on the left panel and clean auth form on the right. Tenant-scoped login with JWT.</div>
+    </div>
+    <div class="ui-card">
+      <div class="ui-icon"><i class="ph ph-megaphone"></i></div>
+      <div class="ui-name">Campaign Manager</div>
+      <div class="ui-desc">Drag-and-drop CSV upload, campaign start/pause/stop controls, progress indicators per campaign, and per-record status tracking.</div>
+    </div>
+    <div class="ui-card">
+      <div class="ui-icon"><i class="ph ph-phone-call"></i></div>
+      <div class="ui-name">Live Dialer</div>
+      <div class="ui-desc">Real-time waveform visualization, live transcript stream, call controls, and instant lead disposition toggle.</div>
+    </div>
+    <div class="ui-card">
+      <div class="ui-icon"><i class="ph ph-address-book"></i></div>
+      <div class="ui-name">Leads CRM</div>
+      <div class="ui-desc">Filterable, sortable table with intent status tags (Hot / Warm / Cold), broker notes, and quick callback scheduling.</div>
+    </div>
+    <div class="ui-card">
+      <div class="ui-icon"><i class="ph ph-chart-bar"></i></div>
+      <div class="ui-name">Analytics</div>
+      <div class="ui-desc">Peak hour graphs, conversion funnel, cost-per-lead, ROI calculator, and campaign-level comparisons with exportable reports.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- IMPLEMENTATION -->
+<div class="cs-section">
+  <p class="label">Implementation Process</p>
+  <h2 class="cs-title">From monorepo to production</h2>
+  <div class="process-grid">
+    <div class="proc-card"><span class="proc-num">01</span><div class="proc-icon"><i class="ph ph-tree-structure"></i></div><div class="proc-label">Monorepo</div><div class="proc-name">Turborepo Setup</div><div class="proc-desc">Configured shared packages, workspace dependencies, and environment isolation between API and web apps.</div></div>
+    <div class="proc-card"><span class="proc-num">02</span><div class="proc-icon"><i class="ph ph-shield-check"></i></div><div class="proc-label">Auth & Tenancy</div><div class="proc-name">Multi-tenant RLS</div><div class="proc-desc">Supabase Row-Level Security policies ensuring complete data isolation per dispatch company tenant.</div></div>
+    <div class="proc-card"><span class="proc-num">03</span><div class="proc-icon"><i class="ph ph-robot"></i></div><div class="proc-label">AI Pipeline</div><div class="proc-name">Voice AI Integration</div><div class="proc-desc">Twilio Media Streams → Deepgram real-time STT → Claude Sonnet NLU → ElevenLabs TTS with <200ms response loop.</div></div>
+    <div class="proc-card"><span class="proc-num">04</span><div class="proc-icon"><i class="ph ph-rocket-launch"></i></div><div class="proc-label">Deployment</div><div class="proc-name">Railway + CI/CD</div><div class="proc-desc">GitHub Actions pipeline with automated tests, Docker builds, Railway deployment, and Stripe webhook registration.</div></div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- RESULTS -->
+<div class="cs-section">
+  <p class="label">Outcomes</p>
+  <h2 class="cs-title">Measurable impact</h2>
+  <div class="results-grid">
+    <div class="result-card"><div class="result-icon"><i class="ph ph-lightning"></i></div><div class="result-num">10×</div><div class="result-label">More outbound calls per day vs. manual dialing</div></div>
+    <div class="result-card"><div class="result-icon"><i class="ph ph-timer"></i></div><div class="result-label" style="font-size:.7rem">&lt;</div><div class="result-num">200ms</div><div class="result-label">AI voice response latency in live calls</div></div>
+    <div class="result-card"><div class="result-icon"><i class="ph ph-users-three"></i></div><div class="result-num">Multi-tenant</div><div class="result-label">Full data isolation across unlimited dispatch companies</div></div>
+    <div class="result-card"><div class="result-icon"><i class="ph ph-star"></i></div><div class="result-num">100%</div><div class="result-label">Call transcripts stored & searchable per tenant CRM</div></div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- ROADMAP -->
+<div class="cs-section">
+  <p class="label">Future Roadmap</p>
+  <h2 class="cs-title">What's next</h2>
+  <div class="roadmap">
+    <div class="road-item"><div class="road-dot"></div><div class="road-text"><strong>Multi-niche expansion</strong> — Adapt the platform for insurance, real estate, and B2B sales verticals with industry-specific scripts.</div></div>
+    <div class="road-item"><div class="road-dot"></div><div class="road-text"><strong>Custom script upload</strong> — Per-campaign AI personality and script configuration through a visual script builder interface.</div></div>
+    <div class="road-item"><div class="road-dot"></div><div class="road-text"><strong>Predictive analytics</strong> — ML models predicting best call windows, broker availability patterns, and conversion likelihood scores.</div></div>
+    <div class="road-item"><div class="road-dot"></div><div class="road-text"><strong>IVR inbound routing</strong> — Enhanced inbound call handling with dynamic IVR trees and intelligent agent transfer triggers.</div></div>
+  </div>
+</div>
+
+</div>
+
+<div class="sec-line"></div>
+
+<!-- DASHBOARD SHOWCASE — Bento Grid + Video -->
+<div class="cs-section da-showcase">
+  <p class="label">Dashboard Showcase</p>
+  <h2 class="cs-title">7 screens. One platform.</h2>
+  <p class="cs-body-text" style="max-width:600px;margin-bottom:3.5rem">From the live dialer to the analytics panel — every surface built for dispatch managers who need speed, clarity, and control.</p>
+
+  <!-- Floating SaaS vectors -->
+  <div class="da-floats" aria-hidden="true">
+    <svg class="da-vec da-v1" viewBox="0 0 70 50" fill="none"><polyline points="2,45 14,22 24,34 36,10 48,28 58,8 68,18" stroke="rgba(100,149,237,0.35)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="10" r="3" fill="rgba(100,149,237,0.5)"/></svg>
+    <svg class="da-vec da-v2" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="22" stroke="rgba(100,149,237,0.15)" stroke-width="1.5"/><path d="M25 25 L25 8 A17 17 0 0 1 42 25 Z" fill="rgba(100,149,237,0.12)"/><path d="M25 25 L42 25 A17 17 0 0 1 14 39 Z" fill="rgba(100,149,237,0.08)"/></svg>
+    <svg class="da-vec da-v3" viewBox="0 0 60 44" fill="none"><rect x="2" y="2" width="56" height="40" rx="6" stroke="rgba(100,149,237,0.2)" stroke-width="1.5"/><line x1="2" y1="12" x2="58" y2="12" stroke="rgba(100,149,237,0.12)" stroke-width="1"/><circle cx="8" cy="7" r="2" fill="rgba(100,149,237,0.3)"/><circle cx="15" cy="7" r="2" fill="rgba(100,149,237,0.2)"/><rect x="8" y="18" width="20" height="3" rx="1.5" fill="rgba(100,149,237,0.15)"/><rect x="8" y="25" width="32" height="3" rx="1.5" fill="rgba(100,149,237,0.1)"/><rect x="8" y="32" width="14" height="3" rx="1.5" fill="rgba(100,149,237,0.08)"/></svg>
+    <svg class="da-vec da-v4" viewBox="0 0 44 44" fill="none"><path d="M22 4 L38 14 L38 30 L22 40 L6 30 L6 14 Z" stroke="rgba(100,149,237,0.2)" stroke-width="1.5" fill="none"/><path d="M22 14 L30 19 L30 29 L22 34 L14 29 L14 19 Z" stroke="rgba(100,149,237,0.12)" stroke-width="1" fill="none"/></svg>
+    <svg class="da-vec da-v5" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="rgba(100,149,237,0.15)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 14 C18 14 14 18 14 24 C14 30 18 34 24 34" stroke="rgba(100,149,237,0.4)" stroke-width="2" stroke-linecap="round"/><path d="M24 34 C30 34 34 30 34 24" stroke="rgba(100,149,237,0.2)" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="24" r="3" fill="rgba(100,149,237,0.4)"/></svg>
+  </div>
+
+  <!-- Premium Image Slider -->
+  <div class="da-slider-container" id="daSlider">
+    <div class="da-slider-track" id="daTrack">
+      <div class="da-slide active" data-title="Live Dashboard">
+        <img src="./assets/callingagent-images/1.jpeg" alt="Live Dashboard">
+        <div class="da-slide-info"><h3 class="da-slide-title">01 — Live Dashboard</h3></div>
+      </div>
+      <div class="da-slide" data-title="Login Screen">
+        <img src="./assets/callingagent-images/2.jpeg" alt="Login Screen">
+        <div class="da-slide-info"><h3 class="da-slide-title">02 — Login Screen</h3></div>
+      </div>
+      <div class="da-slide" data-title="Campaign Manager">
+        <img src="./assets/callingagent-images/3.jpeg" alt="Campaign Manager">
+        <div class="da-slide-info"><h3 class="da-slide-title">03 — Campaign Manager</h3></div>
+      </div>
+      <div class="da-slide" data-title="Live Dialer">
+        <img src="./assets/callingagent-images/4.jpeg" alt="Live Dialer">
+        <div class="da-slide-info"><h3 class="da-slide-title">04 — Live Dialer</h3></div>
+      </div>
+      <div class="da-slide" data-title="Leads CRM">
+        <img src="./assets/callingagent-images/5.jpeg" alt="Leads CRM">
+        <div class="da-slide-info"><h3 class="da-slide-title">05 — Leads CRM</h3></div>
+      </div>
+      <div class="da-slide" data-title="Analytics Panel">
+        <img src="./assets/callingagent-images/6.jpeg" alt="Analytics Panel">
+        <div class="da-slide-info"><h3 class="da-slide-title">06 — Analytics Panel</h3></div>
+      </div>
+      <div class="da-slide" data-title="Call Logs">
+        <img src="./assets/callingagent-images/7.jpeg" alt="Call Logs">
+        <div class="da-slide-info"><h3 class="da-slide-title">07 — Call Logs</h3></div>
+      </div>
+    </div>
+
+    <!-- Slider Navigation -->
+    <div class="da-slider-nav">
+      <button class="da-nav-btn" id="prevSlide"><i class="ph ph-caret-left"></i></button>
+      <div class="da-slider-counter"><span id="currIdx">01</span> / 07</div>
+      <button class="da-nav-btn" id="nextSlide"><i class="ph ph-caret-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div class="da-lightbox" id="daLightbox">
+  <span class="da-close">&times;</span>
+  <img src="" alt="Expanded View" class="da-lightbox-content" id="daLightboxImg">
+</div>
+
+<div class="cs-conclusion">
+  <p class="conclusion-text" id="cText">DispatchAI shows what happens when <em>enterprise-grade AI</em> meets an industry that's still running on spreadsheets and manual dialers.</p>
+  <p class="conclusion-sub" id="cSub">A full-stack, production-ready SaaS built with the same attention to architecture, UX, and AI integration as any Series A startup.</p>
+  <a href="index.html#contact" class="btn-blue" id="cBtn"><i class="ph ph-paper-plane-tilt"></i> Work with Zaid</a>
+</div>
+
+<div class="cs-footer">
+  <a href="case-glowere.html">← Glowere Case Study</a>
+  <span style="font-size:.75rem;color:var(--soft)">&copy; 2025 Zaid</span>
+  <a href="case-fittime.html">Next: FitTime →</a>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cursor.style.left=mx+'px';cursor.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+
+// ── 3D FLOATING LIGHT OBJECTS (WebGL) ──
+(function initBG(){
+  const canvas=document.getElementById('bg-canvas');
+  const gl=canvas.getContext('webgl',{alpha:true,antialias:true});
+  if(!gl)return;
+  function resize(){canvas.width=innerWidth;canvas.height=innerHeight;gl.viewport(0,0,canvas.width,canvas.height)}
+  resize();window.addEventListener('resize',resize);
+  const vsrc=`attribute vec2 a_pos;void main(){gl_Position=vec4(a_pos,0.,1.);}`;
+  const fsrc=`precision highp float;uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;vec3 orb(vec2 uv,vec2 center,float size,float t){vec2 d=uv-center;float dist=length(d);float g=exp(-dist*dist/(size*size*2.0));float pulse=0.85+0.15*sin(t*1.2);return vec3(g*pulse*0.6);}void main(){vec2 uv=(gl_FragCoord.xy/u_res)*2.-1.;uv.x*=u_res.x/u_res.y;float t=u_time;vec2 o1=vec2(cos(t*0.23)*0.6,sin(t*0.17)*0.4);vec2 o2=vec2(sin(t*0.19)*0.5+0.3,cos(t*0.28)*0.5-0.1);vec2 o3=vec2(cos(t*0.15)*0.4-0.4,sin(t*0.22)*0.35+0.3);vec2 o4=vec2(sin(t*0.27)*0.35+0.1,cos(t*0.13)*0.45-0.35);vec3 col=vec3(0.);col+=orb(uv,o1,0.38,t*1.1);col+=orb(uv,o2,0.30,t*0.9+1.2);col+=orb(uv,o3,0.25,t*1.3+2.4);col+=orb(uv,o4,0.20,t*0.8+0.7);vec2 mouse=u_mouse/u_res*2.-1.;mouse.x*=u_res.x/u_res.y;float md=length(uv-mouse);col+=vec3(exp(-md*md/0.08)*0.12);col=clamp(col,0.,1.)*vec3(1.,1.,1.);gl_FragColor=vec4(col,col.r*0.7);}`;
+  function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s}
+  const prog=gl.createProgram();gl.attachShader(prog,shader(gl.VERTEX_SHADER,vsrc));gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,fsrc));gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(prog,'a_pos');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  const uRes=gl.getUniformLocation(prog,'u_res'),uTime=gl.getUniformLocation(prog,'u_time'),uMouse=gl.getUniformLocation(prog,'u_mouse');
+  gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+  let mx2=innerWidth/2,my2=innerHeight/2;document.addEventListener('mousemove',e=>{mx2=e.clientX;my2=e.clientY});
+  let start=null;function frame(ts){if(!start)start=ts;const t=(ts-start)/1000;gl.clear(gl.COLOR_BUFFER_BIT);gl.uniform2f(uRes,canvas.width,canvas.height);gl.uniform1f(uTime,t);gl.uniform2f(uMouse,mx2,canvas.height-my2);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);requestAnimationFrame(frame)}requestAnimationFrame(frame);
+})();
+
+gsap.timeline({delay:.3})
+  .fromTo('.cs-eyebrow',{opacity:0,y:20},{opacity:1,y:0,duration:.6,ease:'power2.out'})
+  .fromTo('.cs-hero-title',{opacity:0,y:60,filter:'blur(12px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1,ease:'power2.out'},'-=.3')
+  .fromTo('.cs-hero-summary',{opacity:0,y:30},{opacity:1,y:0,duration:.7,ease:'power2.out'},'-=.4')
+  .fromTo('.cs-hero-meta',{opacity:0,y:20},{opacity:1,y:0,duration:.6},'-=.3');
+
+function sr(el,props,trig){gsap.fromTo(el,{opacity:0,y:35,filter:'blur(5px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.75,ease:'power2.out',...props,scrollTrigger:{trigger:trig||el,start:'top 88%',toggleActions:'play none none none'}})}
+document.querySelectorAll('.label').forEach(e=>sr(e,{}));
+document.querySelectorAll('.cs-title').forEach(e=>sr(e,{delay:.08}));
+document.querySelectorAll('.cs-body-text').forEach(e=>sr(e,{delay:.15}));
+document.querySelectorAll('.col-visual').forEach(e=>sr(e,{x:40,duration:.9}));
+
+gsap.fromTo('.proc-card',{opacity:0,y:40},{opacity:1,y:0,stagger:.1,duration:.65,ease:'power2.out',scrollTrigger:{trigger:'.process-grid',start:'top 85%'}});
+gsap.fromTo('.ui-card',{opacity:0,y:30,scale:.96},{opacity:1,y:0,scale:1,stagger:.08,duration:.6,ease:'power2.out',scrollTrigger:{trigger:'.ui-grid',start:'top 85%'}});
+gsap.fromTo('.result-card',{opacity:0,y:30,scale:.95},{opacity:1,y:0,scale:1,stagger:.08,duration:.6,ease:'back.out(1.2)',scrollTrigger:{trigger:'.results-grid',start:'top 85%'}});
+gsap.fromTo('.road-item',{opacity:0,y:20},{opacity:1,y:0,stagger:.1,duration:.55,ease:'power2.out',scrollTrigger:{trigger:'.roadmap',start:'top 85%'}});
+sr('#cText',{duration:.9},'#cText');
+sr('#cSub',{delay:.15},'.cs-conclusion');
+sr('#cBtn',{delay:.3},'.cs-conclusion');
+
+// ── DispatchAI Slider ──
+let currentSlide = 0;
+const totalSlides = 7;
+const track = document.getElementById('daTrack');
+const counter = document.getElementById('currIdx');
+const slides = document.querySelectorAll('.da-slide');
+
+function updateSlider() {
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  counter.innerText = String(currentSlide + 1).padStart(2, '0');
+  slides.forEach((s, i) => {
+    s.classList.toggle('active', i === currentSlide);
+  });
+}
+
+document.getElementById('nextSlide').addEventListener('click', () => {
+  currentSlide = (currentSlide + 1) % totalSlides;
+  updateSlider();
+});
+
+document.getElementById('prevSlide').addEventListener('click', () => {
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  updateSlider();
+});
+
+gsap.fromTo('.da-slider-container',{opacity:0,y:40,scale:.98},{opacity:1,y:0,scale:1,duration:1,ease:'power2.out',scrollTrigger:{trigger:'.da-slider-container',start:'top 85%'}});
+
+// ── Lightbox Logic ──
+const lightbox = document.getElementById('daLightbox');
+const lbImg = document.getElementById('daLightboxImg');
+document.querySelectorAll('.da-slide').forEach(slide => {
+  slide.addEventListener('click', () => {
+    const img = slide.querySelector('img');
+    if(img){
+      lbImg.src = img.src;
+      lightbox.classList.add('active');
+    }
+  });
+});
+lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+
+</script>
+</body>
+</html>
