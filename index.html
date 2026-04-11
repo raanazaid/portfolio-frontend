@@ -546,8 +546,8 @@ function initAnim(){
     gsap.to('#submitBtn', { scale: 0.96, duration: 0.1, yoyo: true, repeat: 1 });
     
     try {
-      // Backend API URL - adjust for production
-      const apiUrl = 'http://localhost:3000/api/contact';
+      // Backend API URL - production
+      const apiUrl = 'https://portfolio-backend-phi-woad.vercel.app/api/contact';
       
       const response = await fetch(apiUrl, {
         method: 'POST',
