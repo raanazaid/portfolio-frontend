@@ -154,6 +154,27 @@ section{position:relative;z-index:1}
   background: rgba(255,255,255,0.055);
   box-shadow: 0 0 18px rgba(255,255,255,0.055);
 }
+/* Dropdown option styling for better visibility - black text on light backgrounds */
+.form-select option {
+  background: #fff;
+  color: #000;
+  padding: 8px;
+  font-size: .88rem;
+}
+.form-select option:hover {
+  background: #f5f5f5 !important;
+  color: #000 !important;
+}
+.form-select option:checked,
+.form-select option:active,
+.form-select option:focus {
+  background: #e8e8e8 !important;
+  color: #000 !important;
+}
+/* Ensure select itself maintains theme styling */
+.form-select {
+  color: #fff;
+}
 .phone-input-group .form-select {
   flex: 0 0 120px;
 }
