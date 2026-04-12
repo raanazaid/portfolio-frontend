@@ -152,12 +152,27 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
   .scroll-ind{bottom:2.5rem}
   .about-grid{grid-template-columns:1fr;gap:3rem}
   .about-img-wrap{max-width:260px;margin:0 auto}
-  .bento-grid{grid-template-columns:1fr}
+  .about-content{text-align:center}
+  .skills-grid{justify-content:center}
+  /* Projects section spacing */
+  #projects { padding-top: 3rem; padding-bottom: 3rem; }
+  .bento-grid{grid-template-columns:1fr; gap: 2rem;}
+  #projects .section-label,
+  #projects .section-title { text-align: center; margin-bottom: 1.5rem; }
+  .card-body { text-align: center; padding: 1.5rem; }
+  .card-tags { justify-content: center; margin-bottom: 1rem; }
+  .card-cta { justify-content: center; }
   .project-card:nth-child(1),.project-card:nth-child(4){grid-column:span 1}
+  /* Contact section spacing */
+  #contact { padding-top: 3rem; padding-bottom: 3rem; }
   .contact-grid{grid-template-columns:1fr;gap:3rem}
+  #contact .section-label,
+  #contact .section-title,
+  #contact .section-body { text-align: center; margin-bottom: 1.5rem; }
+  .social-links { justify-content: center; gap: 1rem; margin-top: 2rem; }
   .nav-links{display:none}
   .hamburger{display:flex}
-  footer{flex-direction:column;align-items:flex-start}
+  footer{flex-direction:column;align-items:flex-start; padding: 2rem 0; }
 }
 @media(max-width:600px){
   #hero{padding:5rem 4vw 3rem;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}

@@ -202,6 +202,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 @media(max-width:600px){
   .rank-grid,.tech-grid,.insights-grid{grid-template-columns:1fr}
 }
+
+/* Mobile centering for case study */
+@media(max-width:900px){
+  .cs-hero-content,
+  .cs-section {
+    text-align: center;
+  }
+  .cs-hero-meta {
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .label {
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .cs-title,
+  .cs-body-text {
+    text-align: center;
+  }
+  .cs-title {
+    margin-bottom: 1.5rem;
+  }
+  .cs-body-text {
+    margin-bottom: 2rem;
+  }
+  /* Add spacing for sections */
+  .cs-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
 </style>
 </head>
 <body style="background:var(--bg)">
