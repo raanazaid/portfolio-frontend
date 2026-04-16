@@ -1,0 +1,52 @@
+{
+  "greeting": "Hey, I am Zaid's AI assistant. Want a quick overview of services, common questions, or a direct way to connect?",
+  "services": [
+    {
+      "title": "AI Agents",
+      "description": "Need repetitive work off your plate? I can build AI agents that handle support, ops, and internal workflows without adding complexity."
+    },
+    {
+      "title": "AI Chatbots",
+      "description": "I create chatbot experiences that feel natural, qualify leads, and guide visitors to the right action."
+    },
+    {
+      "title": "AI Automations",
+      "description": "From form submissions to CRM updates, I can automate the repetitive flow so your team can focus on higher-value work."
+    },
+    {
+      "title": "AI Websites/Apps",
+      "description": "I build fast, clean AI-powered websites and apps that look premium and stay easy to maintain."
+    },
+    {
+      "title": "AI SaaS Tools",
+      "description": "If you are launching an AI SaaS, I can help you go from idea to production with a solid, scalable foundation."
+    },
+    {
+      "title": "Custom AI Integrations",
+      "description": "I can plug AI right into your stack - CRMs, Slack, Notion, payments, analytics, even your internal APIs. Smooth and simple."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "How long does a typical AI product take to build?",
+      "answer": "Most MVPs take around 4 to 8 weeks. Exact timing depends on how many features and integrations you need."
+    },
+    {
+      "question": "Do you provide post-launch support?",
+      "answer": "Yes, definitely. I stay involved after launch for fixes, improvements, and future feature rollouts."
+    },
+    {
+      "question": "Can you integrate AI into our existing system?",
+      "answer": "Absolutely. I usually work with existing systems first, so you do not have to rebuild your whole stack."
+    },
+    {
+      "question": "Do you work with startups and enterprise teams?",
+      "answer": "Yes. I work with both early-stage teams and established companies, and tailor the process to your pace."
+    }
+  ],
+  "leadCapture": {
+    "prompt": "Want to talk through your project? Reach out on email or WhatsApp and Zaid will get back with clear next steps.",
+    "email": "mailto:muhammadzaidfida@gmail.com",
+    "whatsapp": "https://wa.me/923466688100"
+  }
+}
