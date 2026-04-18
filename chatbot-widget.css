@@ -285,6 +285,30 @@
   transform: translateY(-1px);
 }
 
+.lead-summary {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px dashed var(--border-subtle);
+  margin-top: 0.5rem;
+}
+
+.lead-summary p {
+  margin-bottom: 0.8rem;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.lead-summary strong {
+  color: var(--text-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
 .chatbot-footer {
   display: grid;
   grid-template-columns: 1fr auto;

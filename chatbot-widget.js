@@ -1,14 +1,37 @@
 const CHATBOT_CONFIG = {
   contentUrl: "./chatbot-content.json",
   huggingFaceEndpoint:
-    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct",
-  huggingFaceApiKey: "", // Add your Hugging Face API key here
+    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3",
+  huggingFaceApiKey: "YOUR_HF_KEY_HERE",
   assistantName: "Zaid's AI Assistant",
 };
 
+const STATE_MODES = { CHAT: 'chat', LEAD: 'lead' };
+
 const state = {
   content: null,
+  mode: STATE_MODES.CHAT,
+  leadStep: 0,
+  leadData: { name: '', project: '', contact: '' },
   leadPromptSent: false,
+};
+
+// CORS/Local Fallback Content
+const FALLBACK_CONTENT = {
+  greeting: "Hi there! I'm Zaid's AI assistant. I can help with services, FAQs, or start a project consultation. What's on your mind?",
+  bio: "Zaid is a full-stack AI Developer specializing in Autonomous Agents, LLM Integrations, and custom Data Engineering. He builds production-ready AI solutions for startups and enterprises.",
+  services: [
+    { title: "AI Agents", description: "Autonomous workflows for internal ops and customer support." },
+    { title: "AI Automation", description: "End-to-end process automation and CRM integrations." }
+  ],
+  faqs: [
+    { question: "How to hire Zaid?", answer: "You can reach out via the contact form on the main site or talk to me right here!" }
+  ],
+  leadCapture: {
+    prompt: "I'd love to get Zaid involved in your project. Let's start with a quick consultation.",
+    email: "mailto:muhammadzaidfida@gmail.com",
+    whatsapp: "https://wa.me/923466688100"
+  }
 };
 
 const els = {
@@ -172,48 +195,119 @@ function showLeadCapture(force = false) {
 }
 
 async function fetchLLMResponse(query) {
-  const response = await fetch(CHATBOT_CONFIG.huggingFaceEndpoint, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${CHATBOT_CONFIG.huggingFaceApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      inputs: `<s>[INST] You are ${CHATBOT_CONFIG.assistantName}. Keep answers short, clear, and helpful for portfolio visitors. User: ${query} [/INST]`,
-      parameters: {
-        max_new_tokens: 220,
-        temperature: 0.7,
-        return_full_text: false,
+  // Enhanced Bio Context for 'out of question' replies
+  const bio = state.content?.bio || FALLBACK_CONTENT.bio;
+  const services = (state.content?.services || FALLBACK_CONTENT.services).map(s => s.title).join(", ");
+  
+  const systemPrompt = `You are Zaid's AI Portfolio Assistant. Zaid is an AI Developer experts in ${services}. ${bio}. Keep answers extremely concise (under 3 sentences), professional, and helpful. If you don't know something about him, stay positive and suggest starting a project consultation.`;
+
+  try {
+    const response = await fetch(CHATBOT_CONFIG.huggingFaceEndpoint, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${CHATBOT_CONFIG.huggingFaceApiKey}`,
+        "Content-Type": "application/json",
       },
-    }),
-  });
+      body: JSON.stringify({
+        inputs: `<s>[INST] ${systemPrompt} \n\n User Question: ${query} [/INST]`,
+        parameters: {
+          max_new_tokens: 150,
+          temperature: 0.6,
+          return_full_text: false,
+        },
+        options: { wait_for_model: true }
+      }),
+    });
 
-  if (!response.ok) {
-    throw new Error(`LLM request failed with status ${response.status}`);
+    if (!response.ok) throw new Error("API_ERROR");
+
+    const data = await response.json();
+    if (!Array.isArray(data) || !data[0]?.generated_text) throw new Error("INVALID_DATA");
+
+    return data[0].generated_text.trim();
+  } catch (error) {
+    console.error("LLM Error:", error);
+    // Smart Local Fallback Search
+    return localKnowledgeSearch(query);
   }
+}
 
-  const data = await response.json();
-  if (!Array.isArray(data) || !data[0]?.generated_text) {
-    throw new Error("Unexpected response from language model");
+function localKnowledgeSearch(query) {
+  const normalized = query.toLowerCase();
+  const allInfo = [
+    ...(state.content?.services || FALLBACK_CONTENT.services),
+    ...(state.content?.faqs || FALLBACK_CONTENT.faqs)
+  ];
+  
+  // Find best keyword match
+  const match = allInfo.find(item => 
+    (item.title && normalized.includes(item.title.toLowerCase())) || 
+    (item.question && normalized.includes(item.question.toLowerCase()))
+  );
+
+  if (match) return match.description || match.answer;
+  
+  return "I'm having a slight sync issue with my AI brain, but I'm great at taking messages! Would you like to start a project consultation so Zaid can get back to you personally?";
+}
+
+function processLeadFlow(text) {
+  appendMessage(text, "user");
+  
+  if (state.leadStep === 0) {
+    state.leadData.name = text;
+    state.leadStep = 1;
+    appendMessage(`Nice to meet you, ${text}! Could you tell me a bit about the project or AI solution you're looking for?`, "bot");
+  } else if (state.leadStep === 1) {
+    state.leadData.project = text;
+    state.leadStep = 2;
+    appendMessage("Understood. I'll make sure Zaid sees those details. Finally, what's a good email or phone number where he can reach you?", "bot");
+  } else if (state.leadStep === 2) {
+    state.leadData.contact = text;
+    state.leadStep = 3;
+    state.mode = STATE_MODES.CHAT; // Reset to chat
+    
+    const summary = `
+      <div class="lead-summary">
+        <p><strong>Lead Captured!</strong></p>
+        <p>I've noted everything down. Since I'm an AI, you should also click below to send this info directly to Zaid's inbox so he can reply ASAP:</p>
+        <div class="contact-actions" style="margin-top:10px">
+          <a href="mailto:muhammadzaidfida@gmail.com?subject=New Project Inquiry: ${encodeURIComponent(state.leadData.name)}&body=Name: ${encodeURIComponent(state.leadData.name)}%0AProject: ${encodeURIComponent(state.leadData.project)}%0AContact: ${encodeURIComponent(state.leadData.contact)}" class="contact-icon-link">
+             <i class="ph ph-envelope"></i> <span>Send to Zaid</span>
+          </a>
+        </div>
+      </div>
+    `;
+    appendMessage(summary, "bot", true);
   }
-
-  return data[0].generated_text.trim();
 }
 
 async function handleUserMessage(userText) {
+  if (state.mode === STATE_MODES.LEAD) {
+    processLeadFlow(userText);
+    return;
+  }
+
   appendMessage(userText, "user");
   const normalized = userText.toLowerCase();
 
-  const serviceMatch = state.content.services.find((service) =>
+  // Keyword triggering lead capture
+  const leadTriggers = ["hire", "work", "project", "consult", "build", "price", "cost", "start"];
+  if (leadTriggers.some(t => normalized.includes(t))) {
+    state.mode = STATE_MODES.LEAD;
+    state.leadStep = 0;
+    appendMessage("I'd love to help start that conversation! First, who am I speaking with? (What's your name?)", "bot");
+    return;
+  }
+
+  const serviceMatch = (state.content?.services || FALLBACK_CONTENT.services).find((service) =>
     normalized.includes(service.title.toLowerCase())
   );
   if (serviceMatch) {
     appendMessage(serviceMatch.description, "bot");
-    showLeadCapture();
     return;
   }
 
-  const faqMatch = state.content.faqs.find((faq) =>
+  const faqMatch = (state.content?.faqs || FALLBACK_CONTENT.faqs).find((faq) =>
     normalized.includes(faq.question.toLowerCase())
   );
   if (faqMatch) {
@@ -231,15 +325,6 @@ async function handleUserMessage(userText) {
     return;
   }
 
-  if (
-    normalized.includes("contact") ||
-    normalized.includes("email") ||
-    normalized.includes("whatsapp")
-  ) {
-    showLeadCapture();
-    return;
-  }
-
   try {
     setTyping(true);
     const llmAnswer = await fetchLLMResponse(userText);
@@ -247,12 +332,7 @@ async function handleUserMessage(userText) {
     appendMessage(llmAnswer, "bot");
   } catch (error) {
     setTyping(false);
-    appendMessage(
-      "I can help with that. For now, you can also reach out directly via email or WhatsApp for a detailed answer.",
-      "bot"
-    );
-    showLeadCapture();
-    console.error(error);
+    appendMessage(localKnowledgeSearch(userText), "bot");
   }
 }
 

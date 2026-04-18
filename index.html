@@ -6,7 +6,7 @@
 <title>Zaid — AI Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
@@ -17,7 +17,7 @@
 :root{
   --bg:#0a0a0a;--surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);
   --white:#fff;--dim:rgba(255,255,255,0.5);--accent:#e8e8e8;
-  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+  --fd:'Archivo Black',sans-serif;--fb:'DM Sans',sans-serif;
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--white);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none}
@@ -58,7 +58,6 @@ nav.scrolled{background:rgba(6,6,8,0.88);backdrop-filter:blur(18px);border-color
 #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 4vw;overflow:hidden;position:relative;z-index:1}
 .hero-left{max-width:800px;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
 .hero-eyebrow{font-size:.75rem;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);margin-bottom:1.4rem;display:flex;align-items:center;gap:.8rem;opacity:0}
-.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--dim)}
 .hero-headline{font-family:var(--fd);font-size:clamp(2.8rem,5.5vw,5.5rem);font-weight:800;line-height:1.0;letter-spacing:-.04em;opacity:0}
 .hero-headline .accent-word{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.55)}
 .hero-sub{margin-top:1.6rem;font-size:.98rem;line-height:1.75;color:var(--dim);max-width:500px;opacity:0}
@@ -78,16 +77,15 @@ nav.scrolled{background:rgba(6,6,8,0.88);backdrop-filter:blur(18px);border-color
 section{position:relative;z-index:1}
 .container{max-width:1300px;margin:0 auto;padding:0 4vw}
 .sec-divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent)}
-.section-label{font-size:.7rem;letter-spacing:.4em;text-transform:uppercase;color:var(--dim);margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;opacity:0}
-.section-label::before{content:'';display:block;width:18px;height:1px;background:var(--dim)}
-.section-title{font-family:var(--fd);font-size:clamp(2rem,4vw,3.4rem);font-weight:800;line-height:1.1;letter-spacing:-.04em;margin-bottom:1.6rem;opacity:0}
-.section-body{color:var(--dim);line-height:1.8;font-size:.93rem;margin-bottom:2.5rem;opacity:0}
+.section-label{font-size:.9rem;letter-spacing:.4em;text-transform:uppercase;color:var(--dim);margin-bottom:1.5rem;display:flex;align-items:center;gap:.8rem;opacity:0}
+.section-title{font-family:var(--fd);font-size:clamp(2.5rem,5.5vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-.04em;margin-bottom:1.8rem;opacity:0}
+.section-body{color:rgba(255,255,255,0.85);line-height:1.8;font-size:1.15rem;margin-bottom:3rem;opacity:0}
 
 /* ABOUT */
-#about{padding:10rem 0;background:transparent}
+#about{padding:12rem 0;background:transparent}
 .about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:6rem;align-items:center}
 .about-img-wrap{position:relative;display:flex;justify-content:center;transform:translateY(-2.5rem)}
-.about-img-ring{width:clamp(220px,26vw,340px);height:clamp(220px,26vw,340px);border-radius:50%;overflow:hidden;border:1px solid rgba(255,255,255,0.12);box-shadow:0 0 55px rgba(255,255,255,0.05);transition:box-shadow .4s,transform .4s}
+.about-img-ring{width:clamp(220px,26vw,340px);height:clamp(220px,26vw,340px);border-radius:40px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);box-shadow:0 0 55px rgba(255,255,255,0.05);transition:box-shadow .4s,transform .4s}
 .about-img-ring:hover{box-shadow:0 0 85px rgba(255,255,255,0.12);transform:rotate(2deg) scale(1.03)}
 .skills-grid{display:flex;flex-wrap:wrap;gap:.75rem;opacity:0}
 .skill-pill{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .95rem;border-radius:6px;background:var(--surface);border:1px solid var(--border);font-size:.8rem;color:var(--accent);transition:background .3s,border-color .3s,box-shadow .3s}
@@ -95,11 +93,11 @@ section{position:relative;z-index:1}
 .skill-pill i{font-size:1rem}
 
 /* PROJECTS */
-#projects{padding:10rem 0}
+#projects{padding:12rem 0}
 .bento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
 .project-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .35s;cursor:pointer;opacity:0;text-decoration:none;color:inherit;display:block}
 .project-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 38px rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.16)}
-.project-card:nth-child(1){grid-column:span 2}
+.project-card:nth-child(1),.project-card:nth-child(4){grid-column:span 2}
 .card-img{width:100%;aspect-ratio:16/8;overflow:hidden;background:linear-gradient(135deg,#111118,#1c1c28);display:flex;align-items:center;justify-content:center;position:relative}
 .card-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform .6s cubic-bezier(.2,0,.2,1)}
 .project-card:hover .card-img img{transform:scale(1.08)}
@@ -116,7 +114,7 @@ section{position:relative;z-index:1}
 .card-cta:hover{gap:.7rem;border-color:#fff}
 
 /* CONTACT */
-#contact{padding:10rem 0}
+#contact{padding:12rem 0}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
 .form-group{margin-bottom:1.15rem;opacity:0}
 .form-label{display:block;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:.45rem}
@@ -253,7 +251,7 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
   .card-body { text-align: center; padding: 1.5rem; }
   .card-tags { justify-content: center; margin-bottom: 1rem; }
   .card-cta { justify-content: center; }
-  .project-card:nth-child(1),.project-card:nth-child(4){grid-column:span 1}
+  .project-card:nth-child(1),.project-card:nth-child(2),.project-card:nth-child(3),.project-card:nth-child(4){grid-column:span 1}
   /* Contact section spacing */
   #contact { padding-top: 3rem; padding-bottom: 3rem; }
   .contact-grid{grid-template-columns:1fr;gap:3rem}
@@ -310,6 +308,7 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="assets/zaid_resume.pdf" target="_blank">Resume</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -319,6 +318,7 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
 <div class="nav-tray" id="navTray">
   <a href="#about" class="tray-link">About</a>
   <a href="#projects" class="tray-link">Projects</a>
+  <a href="assets/zaid_resume.pdf" class="tray-link" target="_blank">Resume</a>
   <a href="#contact" class="tray-link">Contact</a>
 </div>
 
@@ -356,6 +356,11 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
         <p class="section-label">Who I am</p>
         <h2 class="section-title">Building the<br/>Future with AI</h2>
         <p class="section-body">I'm a full-stack AI developer with a passion for building products that combine cutting-edge machine learning with exceptional user experiences. From neural networks to production-ready web apps, I turn complex ideas into elegant, functional realities.</p>
+        <div style="margin-bottom: 2.5rem; opacity: 0;" class="resume-btn-wrap">
+          <a href="assets/zaid_resume.pdf" target="_blank" class="btn btn-secondary">
+            <i class="ph ph-file-pdf"></i> View Resume
+          </a>
+        </div>
         <div class="skills-grid" id="skillsGrid">
           <span class="skill-pill"><i class="ph ph-code"></i> HTML & CSS</span>
           <span class="skill-pill"><i class="ph ph-lightning"></i> JavaScript</span>
@@ -423,6 +428,21 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
           <div class="card-tags"><span class="tag">Flutter</span><span class="tag">Vision AI</span><span class="tag">Gamification</span></div>
           <h3 class="card-title">FitTime — Screen Time Gamifier</h3>
           <p class="card-desc">Physical paywall app — users earn screen time by completing real exercises tracked by Google ML Kit pose detection.</p>
+          <span class="card-cta">View Case Study <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </a>
+
+      <a href="case-datascrap.html" class="project-card">
+        <div class="card-img">
+          <img src="./assets/datascrap/cover_datacrap.png" alt="DataScrap Mockup"/>
+          <span class="card-img-num">04</span>
+          <span class="cs-badge">Case Study</span>
+          <div class="card-img-icon"><i class="ph ph-robot"></i></div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags"><span class="tag">Python</span><span class="tag">Selenium</span><span class="tag">Automation</span></div>
+          <h3 class="card-title">DataScrap — Autonomous Lead Agent</h3>
+          <p class="card-desc">Advanced browser automation engine for high-yield lead extraction and cleaning with anti-detection layers.</p>
           <span class="card-cta">View Case Study <i class="ph ph-arrow-right"></i></span>
         </div>
       </a>
@@ -561,7 +581,7 @@ document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
       float dist=length(d);
       float g=exp(-dist*dist/(size*size*2.0));
       float pulse=0.85+0.15*sin(t*1.2);
-      return vec3(g*pulse*0.6);
+      return vec3(g*pulse*0.56);
     }
     
     void main(){
@@ -588,7 +608,7 @@ document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
       col+=vec3(exp(-md*md/0.08)*0.12);
       
       // Clamp and apply subtle white tone
-      col=clamp(col,0.,1.)*vec3(1.,1.,1.);
+      col=clamp(col,0.,1.)*vec3(0.95,0.98,1.0);
       gl_FragColor=vec4(col,col.r*0.7);
     }
   `;
@@ -679,6 +699,7 @@ function initAnim(){
   }
 
   sr('.about-img-ring',{x:-40,duration:.9},'#about');
+  sr('.resume-btn-wrap',{delay:.15},'#about .about-content');
   sr('#about .section-label',{},'#about .about-content');
   sr('#about .section-title',{delay:.1},'#about .about-content');
   sr('#about .section-body',{delay:.2},'#about .about-content');
@@ -689,7 +710,7 @@ function initAnim(){
   sr('#contact .section-label',{},'#contact');
   sr('#contact .section-title',{delay:.1},'#contact');
   sr('#contact .section-body',{delay:.2},'#contact');
-  gsap.fromTo(['#fg1','#fg2','#fg3','#fg4','#fg5'],{opacity:0,x:40},{opacity:1,x:0,stagger:.1,duration:.6,ease:'power2.out',scrollTrigger:{trigger:'#fg1',start:'top 86%'}});
+  gsap.fromTo(['#fg1','#fg2','#fg3','#fg4','#fg5','#fg6'],{opacity:0,x:40},{opacity:1,x:0,stagger:.1,duration:.6,ease:'power2.out',scrollTrigger:{trigger:'#fg1',start:'top 86%'}});
   sr('#socialLinks',{delay:.3},'#contact');
   gsap.fromTo('#footer',{opacity:0,y:50,filter:'blur(4px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.8,ease:'power2.out',scrollTrigger:{trigger:'#footer',start:'top 92%'}});
 
