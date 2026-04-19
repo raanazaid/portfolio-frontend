@@ -37,12 +37,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 .cs-hero-canvas{position:absolute;inset:0;pointer-events:none}
 .cs-hero-content{position:relative;z-index:2;max-width:900px}
 .cs-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.9rem;letter-spacing:.35em;text-transform:uppercase;color:var(--green-light);margin-bottom:2rem;opacity:0}
-.cs-hero-title{font-family:var(--fd);font-size:clamp(3rem,7vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:1.8rem;opacity:0}
+.cs-hero-title{font-family:var(--fd);font-size:clamp(3.2rem,7.5vw,6rem);font-weight:900;line-height:1;letter-spacing:-.05em;color:#fff;margin-bottom:1.5rem;opacity:0}
 .cs-hero-title span{color:var(--green-light)}
-.cs-hero-summary{font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.8;color:rgba(255,255,255,0.65);max-width:650px;opacity:0}
-.cs-hero-meta{display:flex;gap:3.5rem;margin-top:4.2rem;flex-wrap:wrap;opacity:0}
-.meta-label{font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:.4rem}
-.meta-value{font-size:.92rem;color:rgba(255,255,255,0.75);font-weight:400}
+.cs-hero-summary{font-size:clamp(1rem,1.4vw,1.15rem);line-height:1.7;color:rgba(255,255,255,0.65);max-width:700px;opacity:0}
+.cs-hero-meta{display:grid;grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));gap:2rem;margin-top:4rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:2.5rem;opacity:0}
+.meta-label{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:.5rem}
+.meta-value{font-size:.9rem;font-weight:400;color:rgba(255,255,255,0.85);line-height:1.4}
 .cs-hero-scroll{position:absolute;right:5vw;bottom:4rem;writing-mode:vertical-rl;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,0.3);display:flex;align-items:center;gap:.8rem}
 .cs-hero-scroll::after{content:'';width:1px;height:50px;background:linear-gradient(to bottom,rgba(255,255,255,0.3),transparent)}
 
@@ -170,7 +170,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
   /* Mobile Centering */
   .cs-section,.cs-section-sm,.cs-hero-content{text-align:center;padding-top:5rem;padding-bottom:5rem}
   .label{justify-content:center}
-  .cs-hero-title{font-size:clamp(2.2rem,9vw,3.5rem) !important;line-height:1.1;word-break:break-word;hyphens:auto}
+  .cs-hero-title{font-family:var(--fd);font-size:clamp(3.2rem,7.5vw,6rem);font-weight:900;line-height:1;letter-spacing:-.05em;color:#fff;margin-bottom:1.5rem;opacity:0}
   .cs-title,.cs-body-text{text-align:center;margin-left:auto;margin-right:auto}
   .cs-body-text{max-width:100% !important}
   
@@ -188,7 +188,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 @media(max-width:600px){
   .timeline{grid-template-columns:1fr}
   .results-grid{grid-template-columns:1fr}
-  .cs-hero-meta{gap:1.5rem}
+  .cs-hero-meta{display:grid;grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));gap:2rem;margin-top:4rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:2.5rem;opacity:0}
   .media-gallery{grid-template-columns:1fr}
   .mg-card.wide{grid-column:span 1}
 }
@@ -204,9 +204,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 
 <!-- NAV -->
 <nav>
-  <a href="index.html#projects" class="nav-back"><i class="ph ph-arrow-left"></i> Back to Portfolio</a>
-  <a href="index.html" class="nav-logo">Zaid.</a>
-  <span class="nav-tag">Case Study</span>
+  <a href="index.html#projects" class="nav-back" aria-label="Back"><i class="ph ph-arrow-left" style="font-size:1.4rem"></i></a>
+  <a href="index.html" class="nav-logo" style="position:absolute; left:50%; transform:translateX(-50%); font-size:1.4rem;">Zaid.</a>
 </nav>
 
 <!-- HERO -->
@@ -228,6 +227,41 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 </section>
 
 <div class="cs-body">
+
+<!-- VISUALS & MEDIA — Video + Gallery -->
+<div class="cs-section media-section">
+  <p class="label">Visuals & Media</p>
+  <h2 class="cs-title">See Glowere in action</h2>
+  <p class="cs-body-text" style="max-width:620px;margin-bottom:3.5rem">Watch the chatbot analyse skin, recommend a personalised routine, and guide the user through onboarding — end-to-end in under 90 seconds.</p>
+
+  <!-- VIDEO HERO -->
+  <div class="media-video-wrap" id="glowereVideoWrap">
+    <div class="media-video-inner">
+      <video
+        id="glowereVideo"
+        src="./assets/chatbot/chatbot-video.mp4"
+        autoplay muted loop playsinline
+        class="media-video"
+        onerror="this.closest('.media-video-wrap').classList.add('vid-error')"
+      ></video>
+      <!-- gradient overlay for cinematic feel -->
+      <div class="media-video-overlay"></div>
+      <!-- error fallback -->
+      <div class="media-video-fallback">
+        <i class="ph ph-video-camera-slash" style="font-size:2.4rem;color:var(--green-light);margin-bottom:.8rem"></i>
+        <span style="font-size:.8rem;color:var(--soft)">Add video to:</span>
+        <code style="font-size:.72rem;color:var(--green-light);margin-top:.3rem">./assets/chatbot/chatbot-video.mp4</code>
+      </div>
+    </div>
+    <!-- video caption bar -->
+    <div class="media-video-caption">
+      <span class="mvc-dot"></span>
+      <span>Live demo · Glowere AI Chatbot · Skin Analysis → Routine Recommendation</span>
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
 
 <!-- PROBLEM & SOLUTION -->
 <div class="cs-section">
@@ -360,41 +394,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
   </div>
 </div>
 
-<div class="sec-line"></div>
-
-<!-- VISUALS & MEDIA — Video + Gallery -->
-<div class="cs-section media-section">
-  <p class="label">Visuals & Media</p>
-  <h2 class="cs-title">See Glowere in action</h2>
-  <p class="cs-body-text" style="max-width:620px;margin-bottom:3.5rem">Watch the chatbot analyse skin, recommend a personalised routine, and guide the user through onboarding — end-to-end in under 90 seconds.</p>
-
-  <!-- VIDEO HERO -->
-  <div class="media-video-wrap" id="glowereVideoWrap">
-    <div class="media-video-inner">
-      <video
-        id="glowereVideo"
-        src="./assets/chatbot/chatbot-video.mp4"
-        autoplay muted loop playsinline
-        class="media-video"
-        onerror="this.closest('.media-video-wrap').classList.add('vid-error')"
-      ></video>
-      <!-- gradient overlay for cinematic feel -->
-      <div class="media-video-overlay"></div>
-      <!-- error fallback -->
-      <div class="media-video-fallback">
-        <i class="ph ph-video-camera-slash" style="font-size:2.4rem;color:var(--green-light);margin-bottom:.8rem"></i>
-        <span style="font-size:.8rem;color:var(--soft)">Add video to:</span>
-        <code style="font-size:.72rem;color:var(--green-light);margin-top:.3rem">./assets/chatbot/chatbot-video.mp4</code>
-      </div>
-    </div>
-    <!-- video caption bar -->
-    <div class="media-video-caption">
-      <span class="mvc-dot"></span>
-      <span>Live demo · Glowere AI Chatbot · Skin Analysis → Routine Recommendation</span>
-    </div>
-  </div>
-
-</div>
 
 <!-- ARCHITECTURE -->
 <div class="cs-section-sm" style="padding-top:0">

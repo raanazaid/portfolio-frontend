@@ -37,12 +37,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 .hero-glow2{position:absolute;bottom:-10%;right:-5%;width:50%;height:60%;background:radial-gradient(ellipse at 70% 60%,rgba(255,204,128,0.08),transparent 60%);pointer-events:none}
 .cs-hero-content{position:relative;z-index:2;max-width:900px}
 .cs-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.9rem;letter-spacing:.35em;text-transform:uppercase;color:var(--amber-light);margin-bottom:2rem;opacity:0}
-.cs-hero-title{font-family:var(--fd);font-size:clamp(3rem,7vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:1.8rem;opacity:0}
+.cs-hero-title{font-family:var(--fd);font-size:clamp(3.2rem,7.5vw,6rem);font-weight:900;line-height:1;letter-spacing:-.05em;color:#fff;margin-bottom:1.5rem;opacity:0}
 .cs-hero-title span{color:var(--amber-light)}
-.cs-hero-summary{font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.8;color:rgba(255,255,255,0.65);max-width:650px;opacity:0}
-.cs-hero-meta{display:flex;gap:3.5rem;margin-top:4.2rem;flex-wrap:wrap;opacity:0}
-.meta-label{font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.4rem}
-.meta-value{font-size:.88rem;color:rgba(255,255,255,.72)}
+.cs-hero-summary{font-size:clamp(1rem,1.4vw,1.15rem);line-height:1.7;color:rgba(255,255,255,0.65);max-width:700px;opacity:0}
+.cs-hero-meta{display:grid;grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));gap:2rem;margin-top:4rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:2.5rem;opacity:0}
+.meta-label{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:.5rem}
+.meta-value{font-size:.9rem;font-weight:400;color:rgba(255,255,255,0.85);line-height:1.4}
 
 .cs-body{background:transparent}
 .cs-section{padding:12rem 5vw;max-width:1200px;margin:0 auto}
@@ -213,7 +213,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
   /* Mobile Centering */
   .cs-section,.cs-section-sm,.cs-hero-content{text-align:center;padding-top:5rem;padding-bottom:5rem}
   .label{justify-content:center}
-  .cs-hero-title{font-size:clamp(2.2rem,9vw,3.5rem) !important;line-height:1.1;word-break:break-word;hyphens:auto}
+  .cs-hero-title{font-family:var(--fd);font-size:clamp(3.2rem,7.5vw,6rem);font-weight:900;line-height:1;letter-spacing:-.05em;color:#fff;margin-bottom:1.5rem;opacity:0}
   .cs-title,.cs-body-text{text-align:center;margin-left:auto;margin-right:auto}
   .cs-body-text{max-width:100% !important}
   
@@ -244,9 +244,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 <canvas id="bg-canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none"></canvas>
 
 <nav>
-  <a href="index.html" class="nav-back"><i class="ph ph-arrow-left"></i> Back to Portfolio</a>
-  <a href="index.html" class="nav-logo">Zaid.</a>
-  <span class="nav-tag">Case Study</span>
+  <a href="index.html#projects" class="nav-back" aria-label="Back"><i class="ph ph-arrow-left" style="font-size:1.4rem"></i></a>
+  <a href="index.html" class="nav-logo" style="position:absolute; left:50%; transform:translateX(-50%); font-size:1.4rem;">Zaid.</a>
 </nav>
 
 <!-- HERO -->
@@ -268,6 +267,66 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 </section>
 
 <div class="cs-body">
+
+<!-- VISUALS & MEDIA -->
+<div class="cs-section da-showcase">
+  <p class="label">Platform Showcase</p>
+  <h2 class="cs-title">Dynamic extraction. Scalable leads.</h2>
+  <p class="cs-body-text" style="max-width:650px;margin-bottom:3.5rem">A look inside the engine — from the centralized hub to niche-specific scraping loops. Every screen is designed for high-yield lead generation with zero friction.</p>
+
+  <!-- Floating SaaS vectors -->
+  <div class="da-floats" aria-hidden="true">
+    <svg class="da-vec da-v1" viewBox="0 0 70 50" fill="none"><polyline points="2,45 14,22 24,34 36,10 48,28 58,8 68,18" stroke="rgba(230,81,0,0.35)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="10" r="3" fill="rgba(230,81,0,0.5)"/></svg>
+    <svg class="da-vec da-v2" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="22" stroke="rgba(230,81,0,0.15)" stroke-width="1.5"/><path d="M25 25 L25 8 A17 17 0 0 1 42 25 Z" fill="rgba(230,81,0,0.12)"/><path d="M25 25 L42 25 A17 17 0 0 1 14 39 Z" fill="rgba(230,81,0,0.08)"/></svg>
+    <svg class="da-vec da-v3" viewBox="0 0 60 44" fill="none"><rect x="2" y="2" width="56" height="40" rx="6" stroke="rgba(230,81,0,0.2)" stroke-width="1.5"/><line x1="2" y1="12" x2="58" y2="12" stroke="rgba(230,81,0,0.12)" stroke-width="1"/><circle cx="8" cy="7" r="2" fill="rgba(230,81,0,0.3)"/><circle cx="15" cy="7" r="2" fill="rgba(230,81,0,0.2)"/><rect x="8" y="18" width="20" height="3" rx="1.5" fill="rgba(230,81,0,0.15)"/><rect x="8" y="25" width="32" height="3" rx="1.5" fill="rgba(230,81,0,0.1)"/><rect x="8" y="32" width="14" height="3" rx="1.5" fill="rgba(230,81,0,0.08)"/></svg>
+    <svg class="da-vec da-v4" viewBox="0 0 44 44" fill="none"><path d="M22 4 L38 14 L38 30 L22 40 L6 30 L6 14 Z" stroke="rgba(230,81,0,0.2)" stroke-width="1.5" fill="none"/><path d="M22 14 L30 19 L30 29 L22 34 L14 29 L14 19 Z" stroke="rgba(230,81,0,0.12)" stroke-width="1" fill="none"/></svg>
+  </div>
+
+  <!-- Premium Image Slider -->
+  <div class="da-slider-container" id="daSlider">
+    <div class="da-slider-track" id="daTrack">
+      <div class="da-slide active" data-title="Central Intelligence Hub">
+        <img src="./assets/datascrap/1.png" alt="Intelligence Hub">
+        <div class="da-slide-info"><h3 class="da-slide-title">01 — Central Intelligence Hub</h3></div>
+      </div>
+      <div class="da-slide" data-title="Targeted Talent Acquisition">
+        <img src="./assets/datascrap/2.png" alt="Talent Acquisition">
+        <div class="da-slide-info"><h3 class="da-slide-title">02 — Targeted Talent Acquisition</h3></div>
+      </div>
+      <div class="da-slide" data-title="Professional Lead Harvesting">
+        <img src="./assets/datascrap/3.png" alt="Lead Harvesting">
+        <div class="da-slide-info"><h3 class="da-slide-title">03 — Professional Lead Harvesting</h3></div>
+      </div>
+      <div class="da-slide" data-title="Hyper-Local Discovery Engine">
+        <img src="./assets/datascrap/4.png" alt="Discovery Engine">
+        <div class="da-slide-info"><h3 class="da-slide-title">04 — Hyper-Local Discovery Engine</h3></div>
+      </div>
+      <div class="da-slide" data-title="Global Outreach Mapping">
+        <img src="./assets/datascrap/5.png" alt="Outreach Mapping">
+        <div class="da-slide-info"><h3 class="da-slide-title">05 — Global Outreach Mapping</h3></div>
+      </div>
+      <div class="da-slide" data-title="High-Yield Data Outcomes">
+        <img src="./assets/datascrap/6.png" alt="Data Outcomes">
+        <div class="da-slide-info"><h3 class="da-slide-title">06 — High-Yield Data Outcomes</h3></div>
+      </div>
+    </div>
+
+    <!-- Slider Navigation -->
+    <div class="da-slider-nav">
+      <button class="da-nav-btn" id="prevSlide"><i class="ph ph-caret-left"></i></button>
+      <div class="da-slider-counter"><span id="currIdx">01</span> / 06</div>
+      <button class="da-nav-btn" id="nextSlide"><i class="ph ph-caret-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div class="da-lightbox" id="daLightbox">
+  <span class="da-close">&times;</span>
+  <img src="" alt="Expanded View" class="da-lightbox-content" id="daLightboxImg">
+</div>
+
+<div class="sec-line"></div>
 
 <!-- PROBLEM -->
 <div class="cs-section">
@@ -545,65 +604,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
   </div>
 </div>
 
-<div class="sec-line"></div>
-
-<!-- VISUALS & MEDIA -->
-<div class="cs-section da-showcase">
-  <p class="label">Platform Showcase</p>
-  <h2 class="cs-title">Dynamic extraction. Scalable leads.</h2>
-  <p class="cs-body-text" style="max-width:650px;margin-bottom:3.5rem">A look inside the engine — from the centralized hub to niche-specific scraping loops. Every screen is designed for high-yield lead generation with zero friction.</p>
-
-  <!-- Floating SaaS vectors -->
-  <div class="da-floats" aria-hidden="true">
-    <svg class="da-vec da-v1" viewBox="0 0 70 50" fill="none"><polyline points="2,45 14,22 24,34 36,10 48,28 58,8 68,18" stroke="rgba(230,81,0,0.35)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="10" r="3" fill="rgba(230,81,0,0.5)"/></svg>
-    <svg class="da-vec da-v2" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="22" stroke="rgba(230,81,0,0.15)" stroke-width="1.5"/><path d="M25 25 L25 8 A17 17 0 0 1 42 25 Z" fill="rgba(230,81,0,0.12)"/><path d="M25 25 L42 25 A17 17 0 0 1 14 39 Z" fill="rgba(230,81,0,0.08)"/></svg>
-    <svg class="da-vec da-v3" viewBox="0 0 60 44" fill="none"><rect x="2" y="2" width="56" height="40" rx="6" stroke="rgba(230,81,0,0.2)" stroke-width="1.5"/><line x1="2" y1="12" x2="58" y2="12" stroke="rgba(230,81,0,0.12)" stroke-width="1"/><circle cx="8" cy="7" r="2" fill="rgba(230,81,0,0.3)"/><circle cx="15" cy="7" r="2" fill="rgba(230,81,0,0.2)"/><rect x="8" y="18" width="20" height="3" rx="1.5" fill="rgba(230,81,0,0.15)"/><rect x="8" y="25" width="32" height="3" rx="1.5" fill="rgba(230,81,0,0.1)"/><rect x="8" y="32" width="14" height="3" rx="1.5" fill="rgba(230,81,0,0.08)"/></svg>
-    <svg class="da-vec da-v4" viewBox="0 0 44 44" fill="none"><path d="M22 4 L38 14 L38 30 L22 40 L6 30 L6 14 Z" stroke="rgba(230,81,0,0.2)" stroke-width="1.5" fill="none"/><path d="M22 14 L30 19 L30 29 L22 34 L14 29 L14 19 Z" stroke="rgba(230,81,0,0.12)" stroke-width="1" fill="none"/></svg>
-  </div>
-
-  <!-- Premium Image Slider -->
-  <div class="da-slider-container" id="daSlider">
-    <div class="da-slider-track" id="daTrack">
-      <div class="da-slide active" data-title="Central Intelligence Hub">
-        <img src="./assets/datascrap/1.png" alt="Intelligence Hub">
-        <div class="da-slide-info"><h3 class="da-slide-title">01 — Central Intelligence Hub</h3></div>
-      </div>
-      <div class="da-slide" data-title="Targeted Talent Acquisition">
-        <img src="./assets/datascrap/2.png" alt="Talent Acquisition">
-        <div class="da-slide-info"><h3 class="da-slide-title">02 — Targeted Talent Acquisition</h3></div>
-      </div>
-      <div class="da-slide" data-title="Professional Lead Harvesting">
-        <img src="./assets/datascrap/3.png" alt="Lead Harvesting">
-        <div class="da-slide-info"><h3 class="da-slide-title">03 — Professional Lead Harvesting</h3></div>
-      </div>
-      <div class="da-slide" data-title="Hyper-Local Discovery Engine">
-        <img src="./assets/datascrap/4.png" alt="Discovery Engine">
-        <div class="da-slide-info"><h3 class="da-slide-title">04 — Hyper-Local Discovery Engine</h3></div>
-      </div>
-      <div class="da-slide" data-title="Global Outreach Mapping">
-        <img src="./assets/datascrap/5.png" alt="Outreach Mapping">
-        <div class="da-slide-info"><h3 class="da-slide-title">05 — Global Outreach Mapping</h3></div>
-      </div>
-      <div class="da-slide" data-title="High-Yield Data Outcomes">
-        <img src="./assets/datascrap/6.png" alt="Data Outcomes">
-        <div class="da-slide-info"><h3 class="da-slide-title">06 — High-Yield Data Outcomes</h3></div>
-      </div>
-    </div>
-
-    <!-- Slider Navigation -->
-    <div class="da-slider-nav">
-      <button class="da-nav-btn" id="prevSlide"><i class="ph ph-caret-left"></i></button>
-      <div class="da-slider-counter"><span id="currIdx">01</span> / 06</div>
-      <button class="da-nav-btn" id="nextSlide"><i class="ph ph-caret-right"></i></button>
-    </div>
-  </div>
-</div>
-
-<!-- Lightbox Modal -->
-<div class="da-lightbox" id="daLightbox">
-  <span class="da-close">&times;</span>
-  <img src="" alt="Expanded View" class="da-lightbox-content" id="daLightboxImg">
-</div>
 
 <div class="sec-line"></div>
 

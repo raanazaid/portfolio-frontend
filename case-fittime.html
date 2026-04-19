@@ -38,12 +38,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 .hero-rings svg{width:400px;height:400px}
 .cs-hero-content{position:relative;z-index:2;max-width:900px}
 .cs-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.9rem;letter-spacing:.35em;text-transform:uppercase;color:var(--orange-light);margin-bottom:2rem;opacity:0}
-.cs-hero-title{font-family:var(--fd);font-size:clamp(3rem,7vw,7rem);font-weight:800;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:1.8rem;opacity:0}
+.cs-hero-title{font-family:var(--fd);font-size:clamp(3.2rem,7.5vw,6rem);font-weight:900;line-height:1;letter-spacing:-.05em;color:#fff;margin-bottom:1.5rem;opacity:0}
 .cs-hero-title span{color:var(--orange-light)}
-.cs-hero-summary{font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.8;color:rgba(255,255,255,0.65);max-width:650px;opacity:0}
-.cs-hero-meta{display:flex;gap:3.5rem;margin-top:4rem;flex-wrap:wrap;opacity:0}
-.meta-label{font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:.4rem}
-.meta-value{font-size:.88rem;color:rgba(255,255,255,0.72)}
+.cs-hero-summary{font-size:clamp(1rem,1.4vw,1.15rem);line-height:1.7;color:rgba(255,255,255,0.65);max-width:700px;opacity:0}
+.cs-hero-meta{display:grid;grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));gap:2rem;margin-top:4rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:2.5rem;opacity:0}
+.meta-label{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:.5rem}
+.meta-value{font-size:.9rem;font-weight:400;color:rgba(255,255,255,0.85);line-height:1.4}
 
 .cs-body{background:transparent}
 .cs-section{padding:12rem 5vw;max-width:1200px;margin:0 auto}
@@ -202,7 +202,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
   /* Mobile Centering */
   .cs-section,.cs-section-sm,.cs-hero-content{text-align:center;padding-top:5rem;padding-bottom:5rem}
   .label{justify-content:center}
-  .cs-hero-title{font-size:clamp(2.2rem,9vw,3.5rem) !important;line-height:1.1;word-break:break-word;hyphens:auto}
+  .cs-hero-title{font-family:var(--fd);font-size:clamp(3.2rem,7.5vw,6rem);font-weight:900;line-height:1;letter-spacing:-.05em;color:#fff;margin-bottom:1.5rem;opacity:0}
   .cs-title,.cs-body-text{text-align:center;margin-left:auto;margin-right:auto}
   .cs-body-text{max-width:100% !important}
   
@@ -230,9 +230,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 <canvas id="bg-canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none"></canvas>
 
 <nav>
-  <a href="index.html#projects" class="nav-back"><i class="ph ph-arrow-left"></i> Back to Portfolio</a>
-  <a href="index.html" class="nav-logo">Zaid.</a>
-  <span class="nav-tag">Case Study</span>
+  <a href="index.html#projects" class="nav-back" aria-label="Back"><i class="ph ph-arrow-left" style="font-size:1.4rem"></i></a>
+  <a href="index.html" class="nav-logo" style="position:absolute; left:50%; transform:translateX(-50%); font-size:1.4rem;">Zaid.</a>
 </nav>
 
 <section class="cs-hero" style="background:transparent">
@@ -260,6 +259,55 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 </section>
 
 <div class="cs-body">
+
+<!-- APP SHOWCASE — Cinematic Carousel + Video -->
+<div class="cs-section ft-showcase">
+  <p class="label">App Showcase</p>
+  <h2 class="cs-title">15 screens. One habit loop.</h2>
+  <p class="cs-body-text" style="max-width:600px;margin-bottom:3.5rem">Every screen designed to feel earned — from the moment you block an app to the moment you unlock it through sweat.</p>
+
+  <!-- Floating fitness vectors -->
+  <div class="ft-floats" aria-hidden="true">
+    <svg class="ft-vec ft-v1" viewBox="0 0 80 40" fill="none"><rect x="0" y="16" width="80" height="8" rx="4" fill="rgba(255,143,0,0.18)"/><rect x="2" y="8" width="14" height="24" rx="7" fill="rgba(255,143,0,0.12)"/><rect x="64" y="8" width="14" height="24" rx="7" fill="rgba(255,143,0,0.12)"/></svg>
+    <svg class="ft-vec ft-v2" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="rgba(255,143,0,0.2)" stroke-width="2"/><circle cx="22" cy="22" r="14" stroke="rgba(255,143,0,0.12)" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="22" cy="22" r="5" fill="rgba(255,143,0,0.25)"/></svg>
+    <svg class="ft-vec ft-v3" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(255,143,0,0.15)" stroke-width="2"/><path d="M30 8 A22 22 0 0 1 52 30" stroke="rgba(255,143,0,0.5)" stroke-width="3" stroke-linecap="round"/><line x1="30" y1="30" x2="30" y2="10" stroke="rgba(255,143,0,0.6)" stroke-width="2" stroke-linecap="round"/><line x1="30" y1="30" x2="44" y2="30" stroke="rgba(255,143,0,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <svg class="ft-vec ft-v4" viewBox="0 0 48 60" fill="none"><ellipse cx="24" cy="12" rx="10" ry="12" stroke="rgba(255,143,0,0.2)" stroke-width="1.5"/><rect x="20" y="24" width="8" height="22" rx="2" fill="rgba(255,143,0,0.1)" stroke="rgba(255,143,0,0.2)" stroke-width="1"/><ellipse cx="24" cy="50" rx="8" ry="8" stroke="rgba(255,143,0,0.15)" stroke-width="1.5"/></svg>
+    <svg class="ft-vec ft-v5" viewBox="0 0 60 50" fill="none"><polyline points="2,45 12,20 22,35 32,10 42,28 52,5 58,15" stroke="rgba(255,143,0,0.4)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Phone Carousel -->
+  <div class="ft-carousel-wrap" id="ftCarousel">
+    <div class="ft-carousel-track" id="ftTrack">
+      <!-- 15 phone frames built by JS -->
+    </div>
+    <div class="ft-carousel-dots" id="ftDots"></div>
+    <div class="ft-carousel-nav">
+      <button class="ft-nav-btn" id="ftPrev"><i class="ph ph-caret-left"></i></button>
+      <button class="ft-nav-btn" id="ftNext"><i class="ph ph-caret-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Demo Video -->
+  <div class="ft-video-wrap" id="ftVideoWrap">
+    <div class="ft-video-inner">
+      <video id="ftVideo" src="./assets/fittime-app/app-video.mp4"
+             autoplay muted loop playsinline class="ft-video"
+             onerror="this.closest('.ft-video-wrap').classList.add('vid-error')"></video>
+      <div class="ft-video-overlay"></div>
+      <div class="ft-video-fallback">
+        <i class="ph ph-video-camera-slash" style="font-size:2rem;color:var(--orange-light);margin-bottom:.6rem"></i>
+        <span style="font-size:.78rem;color:var(--soft)">Add video at:</span>
+        <code style="font-size:.7rem;color:var(--orange-light);margin-top:.25rem">./assets/fittime-app/app-video.mp4</code>
+      </div>
+    </div>
+    <div class="ft-video-caption">
+      <span class="ftvc-dot"></span>
+      FitTime · Full app demo — exercise detection, app unlock, rank progression
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
 
 <!-- PROBLEM -->
 <div class="cs-section">
@@ -430,54 +478,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 
 </div>
 
-<div class="sec-line"></div>
-
-<!-- APP SHOWCASE — Cinematic Carousel + Video -->
-<div class="cs-section ft-showcase">
-  <p class="label">App Showcase</p>
-  <h2 class="cs-title">15 screens. One habit loop.</h2>
-  <p class="cs-body-text" style="max-width:600px;margin-bottom:3.5rem">Every screen designed to feel earned — from the moment you block an app to the moment you unlock it through sweat.</p>
-
-  <!-- Floating fitness vectors -->
-  <div class="ft-floats" aria-hidden="true">
-    <svg class="ft-vec ft-v1" viewBox="0 0 80 40" fill="none"><rect x="0" y="16" width="80" height="8" rx="4" fill="rgba(255,143,0,0.18)"/><rect x="2" y="8" width="14" height="24" rx="7" fill="rgba(255,143,0,0.12)"/><rect x="64" y="8" width="14" height="24" rx="7" fill="rgba(255,143,0,0.12)"/></svg>
-    <svg class="ft-vec ft-v2" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="rgba(255,143,0,0.2)" stroke-width="2"/><circle cx="22" cy="22" r="14" stroke="rgba(255,143,0,0.12)" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="22" cy="22" r="5" fill="rgba(255,143,0,0.25)"/></svg>
-    <svg class="ft-vec ft-v3" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="rgba(255,143,0,0.15)" stroke-width="2"/><path d="M30 8 A22 22 0 0 1 52 30" stroke="rgba(255,143,0,0.5)" stroke-width="3" stroke-linecap="round"/><line x1="30" y1="30" x2="30" y2="10" stroke="rgba(255,143,0,0.6)" stroke-width="2" stroke-linecap="round"/><line x1="30" y1="30" x2="44" y2="30" stroke="rgba(255,143,0,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
-    <svg class="ft-vec ft-v4" viewBox="0 0 48 60" fill="none"><ellipse cx="24" cy="12" rx="10" ry="12" stroke="rgba(255,143,0,0.2)" stroke-width="1.5"/><rect x="20" y="24" width="8" height="22" rx="2" fill="rgba(255,143,0,0.1)" stroke="rgba(255,143,0,0.2)" stroke-width="1"/><ellipse cx="24" cy="50" rx="8" ry="8" stroke="rgba(255,143,0,0.15)" stroke-width="1.5"/></svg>
-    <svg class="ft-vec ft-v5" viewBox="0 0 60 50" fill="none"><polyline points="2,45 12,20 22,35 32,10 42,28 52,5 58,15" stroke="rgba(255,143,0,0.4)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </div>
-
-  <!-- Phone Carousel -->
-  <div class="ft-carousel-wrap" id="ftCarousel">
-    <div class="ft-carousel-track" id="ftTrack">
-      <!-- 15 phone frames built by JS -->
-    </div>
-    <div class="ft-carousel-dots" id="ftDots"></div>
-    <div class="ft-carousel-nav">
-      <button class="ft-nav-btn" id="ftPrev"><i class="ph ph-caret-left"></i></button>
-      <button class="ft-nav-btn" id="ftNext"><i class="ph ph-caret-right"></i></button>
-    </div>
-  </div>
-
-  <!-- Demo Video -->
-  <div class="ft-video-wrap" id="ftVideoWrap">
-    <div class="ft-video-inner">
-      <video id="ftVideo" src="./assets/fittime-app/app-video.mp4"
-             autoplay muted loop playsinline class="ft-video"
-             onerror="this.closest('.ft-video-wrap').classList.add('vid-error')"></video>
-      <div class="ft-video-overlay"></div>
-      <div class="ft-video-fallback">
-        <i class="ph ph-video-camera-slash" style="font-size:2rem;color:var(--orange-light);margin-bottom:.6rem"></i>
-        <span style="font-size:.78rem;color:var(--soft)">Add video at:</span>
-        <code style="font-size:.7rem;color:var(--orange-light);margin-top:.25rem">./assets/fittime-app/app-video.mp4</code>
-      </div>
-    </div>
-    <div class="ft-video-caption">
-      <span class="ftvc-dot"></span>
-      FitTime · Full app demo — exercise detection, app unlock, rank progression
-    </div>
-  </div>
-</div>
 
 <div class="cs-conclusion">
   <div class="conc-glow"></div>
