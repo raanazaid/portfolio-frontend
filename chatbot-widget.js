@@ -1,6 +1,8 @@
 const CHATBOT_CONFIG = {
   contentUrl: "./chatbot-content.json",
-  backendChatEndpoint: "https://portfolio-backend-phi-woad.vercel.app/api/chat",
+  backendChatEndpoint: window.location.hostname === "localhost" || window.location.protocol === "file:" 
+    ? "http://localhost:3000/api/chat" 
+    : "https://portfolio-backend-phi-woad.vercel.app/api/chat",
   assistantName: "Zaid's AI Assistant",
 };
 
