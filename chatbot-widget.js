@@ -1,8 +1,6 @@
 const CHATBOT_CONFIG = {
   contentUrl: "./chatbot-content.json",
-  huggingFaceEndpoint:
-    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3",
-  huggingFaceApiKey: "YOUR_HF_KEY_HERE",
+  backendChatEndpoint: "https://portfolio-backend-phi-woad.vercel.app/api/chat",
   assistantName: "Zaid's AI Assistant",
 };
 
@@ -202,10 +200,9 @@ async function fetchLLMResponse(query) {
   const systemPrompt = `You are Zaid's AI Portfolio Assistant. Zaid is an AI Developer experts in ${services}. ${bio}. Keep answers extremely concise (under 3 sentences), professional, and helpful. If you don't know something about him, stay positive and suggest starting a project consultation.`;
 
   try {
-    const response = await fetch(CHATBOT_CONFIG.huggingFaceEndpoint, {
+    const response = await fetch(CHATBOT_CONFIG.backendChatEndpoint, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${CHATBOT_CONFIG.huggingFaceApiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -214,8 +211,7 @@ async function fetchLLMResponse(query) {
           max_new_tokens: 150,
           temperature: 0.6,
           return_full_text: false,
-        },
-        options: { wait_for_model: true }
+        }
       }),
     });
 
