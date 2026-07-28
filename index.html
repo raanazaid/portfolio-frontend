@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script>
-  // FOUC prevention — set theme before first paint
-  (function(){var t=localStorage.getItem('portfolio-theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.setAttribute('data-theme',t)})()
-</script>
 <title>Zaid — AI Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -288,8 +286,6 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
 }
 </style>
 <link rel="stylesheet" href="./chatbot-widget.css" />
-<link rel="stylesheet" href="./theme.css" />
-<script src="./theme-toggle.js" defer></script>
 </head>
 <body>
 
@@ -315,25 +311,15 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
     <li><a href="assets/ZAID_AI-ENGINEER_CV.pdf" target="_blank">Resume</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:.8rem">
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      <span class="icon-sun"><i class="ph ph-sun"></i></span>
-      <span class="icon-moon"><i class="ph ph-moon"></i></span>
-    </button>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 <div class="nav-tray" id="navTray">
   <a href="#about" class="tray-link">About</a>
   <a href="#projects" class="tray-link">Projects</a>
   <a href="assets/ZAID_AI-ENGINEER_CV.pdf" class="tray-link" target="_blank">Resume</a>
   <a href="#contact" class="tray-link">Contact</a>
-  <button class="theme-toggle" aria-label="Toggle theme" style="margin-top:1rem">
-    <span class="icon-sun"><i class="ph ph-sun"></i></span>
-    <span class="icon-moon"><i class="ph ph-moon"></i></span>
-  </button>
 </div>
 
 <main id="main" style="opacity:0;visibility:hidden;">
@@ -363,7 +349,7 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
     <div class="about-grid">
       <div class="about-img-wrap">
         <div class="about-img-ring">
-          <img src="profile.webp" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+          <img src="profile.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
       </div>
       <div class="about-content">
@@ -403,7 +389,7 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
 
       <a href="case-dispatch.html" class="project-card">
         <div class="card-img">
-          <img src="dispatchai-cover.webp" alt="DispatchAI Mockup" loading="lazy">
+          <img src="dispatchai-cover.png" alt="DispatchAI Mockup">
           <span class="card-img-num">01</span>
           <span class="cs-badge">Case Study</span>
           <div class="card-img-icon"><i class="ph ph-phone-call"></i></div>
@@ -418,7 +404,7 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
 
       <a href="case-glowere.html" class="project-card">
         <div class="card-img">
-          <img src="chatbot-cover.webp" alt="AI Chatbot Mockup" loading="lazy"/>
+          <img src="chatbot-cover.png" alt="AI Chatbot Mockup"/>
           <span class="card-img-num">02</span>
           <span class="cs-badge">Case Study</span>
           <div class="card-img-icon"><i class="ph ph-sparkle"></i></div>
@@ -433,7 +419,7 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
 
       <a href="case-fittime.html" class="project-card">
         <div class="card-img">
-          <img src="fittime-cover.webp" alt="FitTime App Mockup" loading="lazy"/>
+          <img src="fittime-cover.png" alt="FitTime App Mockup"/>
           <span class="card-img-num">03</span>
           <span class="cs-badge">Case Study</span>
           <div class="card-img-icon"><i class="ph ph-barbell"></i></div>
@@ -448,7 +434,7 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
 
       <a href="case-datascrap.html" class="project-card">
         <div class="card-img">
-          <img src="./assets/datascrap/cover_datacrap.webp" alt="DataScrap Mockup" loading="lazy"/>
+          <img src="./assets/datascrap/cover_datacrap.png" alt="DataScrap Mockup"/>
           <span class="card-img-num">04</span>
           <span class="cs-badge">Case Study</span>
           <div class="card-img-icon"><i class="ph ph-robot"></i></div>
@@ -563,177 +549,105 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-// ── CURSOR INTERACTION ──
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let targetX = innerWidth / 2, targetY = innerHeight / 2;
-let currentX = innerWidth / 2, currentY = innerHeight / 2;
-let ringX = innerWidth / 2, ringY = innerHeight / 2;
-let cursorInitialized = false;
+// CURSOR
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cursor.style.left=mx+'px';cursor.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
 
-window.addEventListener('mousemove', e => {
-  targetX = e.clientX;
-  targetY = e.clientY;
-  if (!cursorInitialized && cursor && ring) {
-    cursorInitialized = true;
-    currentX = targetX; currentY = targetY;
-    ringX = targetX; ringY = targetY;
-    cursor.classList.add('visible');
-    ring.classList.add('visible');
-  }
-}, { passive: true });
+// ── 3D FLOATING LIGHT OBJECTS (WebGL) ──
+(function initBG(){
+  const canvas=document.getElementById('bg-canvas');
+  const gl=canvas.getContext('webgl',{alpha:true,antialias:true});
+  if(!gl)return;
 
-(function animateCursor() {
-  currentX += (targetX - currentX) * 0.4;
-  currentY += (targetY - currentY) * 0.4;
-  ringX += (targetX - ringX) * 0.15;
-  ringY += (targetY - ringY) * 0.15;
+  function resize(){canvas.width=innerWidth;canvas.height=innerHeight;gl.viewport(0,0,canvas.width,canvas.height)}
+  resize();window.addEventListener('resize',resize);
 
-  if (cursor) {
-    cursor.style.left = currentX + 'px';
-    cursor.style.top = currentY + 'px';
-  }
-  if (ring) {
-    ring.style.left = ringX + 'px';
-    ring.style.top = ringY + 'px';
-  }
-  requestAnimationFrame(animateCursor);
-})();
-
-// ── 3D FLOATING LIGHT OBJECTS & MOUSE-FOLLOW (WebGL) ──
-(function initBG() {
-  const canvas = document.getElementById('bg-canvas');
-  if (!canvas) return;
-  const gl = canvas.getContext('webgl', { alpha: true, antialias: false, powerPreference: 'high-performance' });
-  if (!gl) return;
-
-  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-  function resize() {
-    canvas.width = Math.floor(innerWidth * dpr);
-    canvas.height = Math.floor(innerHeight * dpr);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
-  resize();
-  window.addEventListener('resize', resize, { passive: true });
-
-  const vsrc = `
+  const vsrc=`
     attribute vec2 a_pos;
-    void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+    void main(){gl_Position=vec4(a_pos,0.,1.);}
   `;
-  const fsrc = `
+  const fsrc=`
     precision highp float;
     uniform vec2 u_res;
     uniform float u_time;
     uniform vec2 u_mouse;
-    uniform float u_lightMode;
-
-    vec3 orb(vec2 uv, vec2 center, float size, float t) {
-      vec2 d = uv - center;
-      float dist = length(d);
-      float g = exp(-dist * dist / (size * size * 2.0));
-      float pulse = 0.85 + 0.15 * sin(t * 1.2);
-      return vec3(g * pulse * 0.56);
+    
+    float sdSphere(vec3 p,float r){return length(p)-r;}
+    
+    vec3 orb(vec2 uv,vec2 center,float size,float t){
+      vec2 d=uv-center;
+      float dist=length(d);
+      float g=exp(-dist*dist/(size*size*2.0));
+      float pulse=0.85+0.15*sin(t*1.2);
+      return vec3(g*pulse*0.56);
     }
-
-    void main() {
-      vec2 uv = (gl_FragCoord.xy / u_res) * 2.0 - 1.0;
-      uv.x *= u_res.x / u_res.y;
-      float t = u_time;
-
-      vec2 o1 = vec2(cos(t * 0.23) * 0.6, sin(t * 0.17) * 0.4);
-      vec2 o2 = vec2(sin(t * 0.19) * 0.5 + 0.3, cos(t * 0.28) * 0.5 - 0.1);
-      vec2 o3 = vec2(cos(t * 0.15) * 0.4 - 0.4, sin(t * 0.22) * 0.35 + 0.3);
-      vec2 o4 = vec2(sin(t * 0.27) * 0.35 + 0.1, cos(t * 0.13) * 0.45 - 0.35);
-
-      vec3 col = vec3(0.0);
-      col += orb(uv, o1, 0.38, t * 1.1);
-      col += orb(uv, o2, 0.30, t * 0.9 + 1.2);
-      col += orb(uv, o3, 0.25, t * 1.3 + 2.4);
-      col += orb(uv, o4, 0.20, t * 0.8 + 0.7);
-
-      // Interactive Mouse Follow Glow
-      vec2 mouse = (u_mouse / u_res) * 2.0 - 1.0;
-      mouse.x *= u_res.x / u_res.y;
-      float md = length(uv - mouse);
-      float mouseGlow = exp(-md * md / 0.14) * 0.55;
-      col += vec3(mouseGlow);
-
-      col = clamp(col, 0.0, 1.0);
-      if (u_lightMode > 0.5) {
-        // Light Theme: subtle ambient dark orb
-        gl_FragColor = vec4(vec3(0.12, 0.14, 0.22), col.r * 0.22);
-      } else {
-        // Dark Theme: luminous white ambient glow
-        gl_FragColor = vec4(col * vec3(0.95, 0.98, 1.0), col.r * 0.75);
-      }
+    
+    void main(){
+      vec2 uv=(gl_FragCoord.xy/u_res)*2.-1.;
+      uv.x*=u_res.x/u_res.y;
+      float t=u_time;
+      
+      // 4 floating orbs with different trajectories
+      vec2 o1=vec2(cos(t*0.23)*0.6, sin(t*0.17)*0.4);
+      vec2 o2=vec2(sin(t*0.19)*0.5+0.3, cos(t*0.28)*0.5-0.1);
+      vec2 o3=vec2(cos(t*0.15)*0.4-0.4, sin(t*0.22)*0.35+0.3);
+      vec2 o4=vec2(sin(t*0.27)*0.35+0.1, cos(t*0.13)*0.45-0.35);
+      
+      vec3 col=vec3(0.);
+      col+=orb(uv,o1,0.38,t*1.1);
+      col+=orb(uv,o2,0.30,t*0.9+1.2);
+      col+=orb(uv,o3,0.25,t*1.3+2.4);
+      col+=orb(uv,o4,0.20,t*0.8+0.7);
+      
+      // Mouse reactive subtle orb
+      vec2 mouse=u_mouse/u_res*2.-1.;
+      mouse.x*=u_res.x/u_res.y;
+      float md=length(uv-mouse);
+      col+=vec3(exp(-md*md/0.08)*0.12);
+      
+      // Clamp and apply subtle white tone
+      col=clamp(col,0.,1.)*vec3(0.95,0.98,1.0);
+      gl_FragColor=vec4(col,col.r*0.7);
     }
   `;
 
-  function shader(type, src) {
-    const s = gl.createShader(type);
-    gl.shaderSource(s, src);
-    gl.compileShader(s);
-    return s;
-  }
-  const prog = gl.createProgram();
-  gl.attachShader(prog, shader(gl.VERTEX_SHADER, vsrc));
-  gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, fsrc));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
+  function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s}
+  const prog=gl.createProgram();
+  gl.attachShader(prog,shader(gl.VERTEX_SHADER,vsrc));
+  gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,fsrc));
+  gl.linkProgram(prog);gl.useProgram(prog);
 
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
-  const loc = gl.getAttribLocation(prog, 'a_pos');
+  const buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const loc=gl.getAttribLocation(prog,'a_pos');
   gl.enableVertexAttribArray(loc);
-  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
 
-  const uRes = gl.getUniformLocation(prog, 'u_res');
-  const uTime = gl.getUniformLocation(prog, 'u_time');
-  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
-  const uLightMode = gl.getUniformLocation(prog, 'u_lightMode');
+  const uRes=gl.getUniformLocation(prog,'u_res');
+  const uTime=gl.getUniformLocation(prog,'u_time');
+  const uMouse=gl.getUniformLocation(prog,'u_mouse');
 
   gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 
-  let lerpMouseX = innerWidth / 2;
-  let lerpMouseY = innerHeight / 2;
-  let animationFrameId = null;
-  let startTime = null;
+  let mx2=innerWidth/2,my2=innerHeight/2;
+  document.addEventListener('mousemove',e=>{mx2=e.clientX;my2=e.clientY});
 
-  function isLight() {
-    return document.documentElement.getAttribute('data-theme') === 'light' ? 1.0 : 0.0;
-  }
-
-  function frame(ts) {
-    if (!startTime) startTime = ts;
-    const t = (ts - startTime) / 1000;
-
-    // Smooth lerp mouse follow
-    lerpMouseX += (targetX - lerpMouseX) * 0.08;
-    lerpMouseY += (targetY - lerpMouseY) * 0.08;
-
+  let start=null;
+  function frame(ts){
+    if(!start)start=ts;
+    const t=(ts-start)/1000;
     gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.uniform2f(uRes, canvas.width, canvas.height);
-    gl.uniform1f(uTime, t);
-    gl.uniform2f(uMouse, lerpMouseX * dpr, (innerHeight - lerpMouseY) * dpr);
-    gl.uniform1f(uLightMode, isLight());
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
-    animationFrameId = requestAnimationFrame(frame);
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+    gl.uniform1f(uTime,t);
+    gl.uniform2f(uMouse,mx2,canvas.height-my2);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(frame);
   }
-
-  // Pause render loop when document is hidden to save battery & GPU
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    } else {
-      startTime = null;
-      animationFrameId = requestAnimationFrame(frame);
-    }
-  });
-
-  animationFrameId = requestAnimationFrame(frame);
+  requestAnimationFrame(frame);
 })();
 
 // PRELOADER
@@ -799,10 +713,6 @@ function initAnim(){
   gsap.fromTo(['#fg1','#fg2','#fg3','#fg4','#fg5','#fg6'],{opacity:0,x:40},{opacity:1,x:0,stagger:.1,duration:.6,ease:'power2.out',scrollTrigger:{trigger:'#fg1',start:'top 86%'}});
   sr('#socialLinks',{delay:.3},'#contact');
   gsap.fromTo('#footer',{opacity:0,y:50,filter:'blur(4px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.8,ease:'power2.out',scrollTrigger:{trigger:'#footer',start:'top 92%'}});
-
-  // Refresh ScrollTrigger once everything is mounted
-  setTimeout(() => ScrollTrigger.refresh(), 300);
-  window.addEventListener('load', () => ScrollTrigger.refresh());
 
   // Form submission handler
   const submitBtn = document.getElementById('submitBtn');
