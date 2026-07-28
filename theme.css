@@ -8,11 +8,11 @@
   --bg: #f8f9fb;
   --ink: #1a1a2e;
   --mid: #555555;
-  --soft: #777777;
-  --dim: rgba(26, 26, 46, 0.6);
+  --soft: #666666;
+  --dim: rgba(26, 26, 46, 0.65);
   --faint: rgba(26, 26, 46, 0.03);
   --border: rgba(26, 26, 46, 0.12);
-  --surface: rgba(26, 26, 46, 0.04);
+  --surface: #ffffff;
   --white: #1a1a2e;
   --accent: #2a2a3e;
 
@@ -38,15 +38,35 @@
 }
 
 /* ── Custom Cursor ────────────────────────────────── */
-[data-theme="light"] .cursor {
-  background: #1a1a2e !important;
+/* Keep background white with difference blend mode for automatic pure inversion */
+.cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #ffffff !important;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference !important;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
-[data-theme="light"] .cursor-ring {
-  border-color: rgba(26, 26, 46, 0.25) !important;
+.cursor-ring {
+  position: fixed;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference !important;
+  opacity: 0;
+  transition: width .3s, height .3s, border-color .3s, opacity .3s ease;
 }
-[data-theme="light"] body:has(a:hover) .cursor-ring,
-[data-theme="light"] body:has(button:hover) .cursor-ring {
-  border-color: #1a1a2e !important;
+.cursor.visible, .cursor-ring.visible {
+  opacity: 1;
 }
 
 /* ── Navigation (index.html) ─────────────────────── */
@@ -157,7 +177,7 @@
   color: var(--ink) !important;
 }
 [data-theme="light"] .section-body {
-  color: rgba(26, 26, 46, 0.75) !important;
+  color: rgba(26, 26, 46, 0.8) !important;
 }
 
 /* ── Section Divider ──────────────────────────────── */
@@ -176,13 +196,13 @@
 
 /* ── Skill Pills ──────────────────────────────────── */
 [data-theme="light"] .skill-pill {
-  background: var(--surface) !important;
+  background: #ffffff !important;
   border-color: var(--border) !important;
   color: var(--ink) !important;
 }
 [data-theme="light"] .skill-pill:hover {
-  background: rgba(26, 26, 46, 0.06) !important;
-  border-color: rgba(26, 26, 46, 0.18) !important;
+  background: rgba(26, 26, 46, 0.04) !important;
+  border-color: rgba(26, 26, 46, 0.2) !important;
   box-shadow: 0 0 14px rgba(26, 26, 46, 0.04) !important;
 }
 [data-theme="light"] .skill-pill i {
@@ -193,46 +213,47 @@
 [data-theme="light"] .project-card {
   background: #ffffff !important;
   border-color: var(--border) !important;
-  box-shadow: 0 2px 12px rgba(26, 26, 46, 0.04) !important;
+  box-shadow: 0 4px 20px rgba(26, 26, 46, 0.05) !important;
 }
 [data-theme="light"] .project-card:hover {
   transform: translateY(-8px) scale(1.01) !important;
-  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.1) !important;
-  border-color: rgba(26, 26, 46, 0.16) !important;
+  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.12) !important;
+  border-color: rgba(26, 26, 46, 0.2) !important;
 }
 [data-theme="light"] .card-img {
   background: linear-gradient(135deg, #e8eaf0, #dfe1e8) !important;
 }
 [data-theme="light"] .card-img-num {
-  color: rgba(26, 26, 46, 0.06) !important;
+  color: rgba(26, 26, 46, 0.08) !important;
 }
 [data-theme="light"] .card-img-icon {
-  background: rgba(255, 255, 255, 0.7) !important;
-  border-color: rgba(26, 26, 46, 0.1) !important;
-  color: var(--soft) !important;
-}
-[data-theme="light"] .cs-badge {
-  background: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
   border-color: rgba(26, 26, 46, 0.12) !important;
   color: var(--soft) !important;
 }
+[data-theme="light"] .cs-badge {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(26, 26, 46, 0.15) !important;
+  color: #1a1a2e !important;
+  font-weight: 600 !important;
+}
 [data-theme="light"] .tag {
-  background: rgba(26, 26, 46, 0.04) !important;
-  border-color: var(--border) !important;
-  color: var(--soft) !important;
+  background: rgba(26, 26, 46, 0.05) !important;
+  border-color: rgba(26, 26, 46, 0.12) !important;
+  color: #444444 !important;
 }
 [data-theme="light"] .card-title {
-  color: var(--ink) !important;
+  color: #1a1a2e !important;
 }
 [data-theme="light"] .card-desc {
-  color: var(--soft) !important;
+  color: #555555 !important;
 }
 [data-theme="light"] .card-cta {
-  color: var(--ink) !important;
-  border-bottom-color: rgba(26, 26, 46, 0.18) !important;
+  color: #1a1a2e !important;
+  border-bottom-color: rgba(26, 26, 46, 0.2) !important;
 }
 [data-theme="light"] .card-cta:hover {
-  border-color: var(--ink) !important;
+  border-color: #1a1a2e !important;
 }
 
 /* ── Contact Form ─────────────────────────────────── */
@@ -677,12 +698,6 @@
 [data-theme="light"] .media-card {
   background: #ffffff !important;
   border-color: var(--border) !important;
-}
-
-/* ── WebGL Canvas (dimmed in light mode) ──────────── */
-[data-theme="light"] #bg-canvas {
-  opacity: 0.35 !important;
-  filter: invert(1) hue-rotate(180deg) !important;
 }
 
 /* ── Smooth theme transition ──────────────────────── */
