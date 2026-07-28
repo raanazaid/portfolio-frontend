@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>
+  // FOUC prevention — set theme before first paint
+  (function(){var t=localStorage.getItem('portfolio-theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.setAttribute('data-theme',t)})()
+</script>
 <title>Zaid — AI Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -286,6 +290,8 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
 }
 </style>
 <link rel="stylesheet" href="./chatbot-widget.css" />
+<link rel="stylesheet" href="./theme.css" />
+<script src="./theme-toggle.js" defer></script>
 </head>
 <body>
 
@@ -311,15 +317,25 @@ footer{border-top:1px solid var(--border);padding:2.8rem 4vw;display:flex;align-
     <li><a href="assets/ZAID_AI-ENGINEER_CV.pdf" target="_blank">Resume</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="icon-sun"><i class="ph ph-sun"></i></span>
+      <span class="icon-moon"><i class="ph ph-moon"></i></span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 <div class="nav-tray" id="navTray">
   <a href="#about" class="tray-link">About</a>
   <a href="#projects" class="tray-link">Projects</a>
   <a href="assets/ZAID_AI-ENGINEER_CV.pdf" class="tray-link" target="_blank">Resume</a>
   <a href="#contact" class="tray-link">Contact</a>
+  <button class="theme-toggle" aria-label="Toggle theme" style="margin-top:1rem">
+    <span class="icon-sun"><i class="ph ph-sun"></i></span>
+    <span class="icon-moon"><i class="ph ph-moon"></i></span>
+  </button>
 </div>
 
 <main id="main" style="opacity:0;visibility:hidden;">

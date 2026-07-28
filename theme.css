@@ -1,0 +1,695 @@
+/* ═══════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES
+   Applied via [data-theme="light"] on <html>
+   ═══════════════════════════════════════════════════ */
+
+/* ── Core Palette ─────────────────────────────────── */
+[data-theme="light"] {
+  --bg: #f8f9fb;
+  --ink: #1a1a2e;
+  --mid: #555555;
+  --soft: #777777;
+  --dim: rgba(26, 26, 46, 0.6);
+  --faint: rgba(26, 26, 46, 0.03);
+  --border: rgba(26, 26, 46, 0.12);
+  --surface: rgba(26, 26, 46, 0.04);
+  --white: #1a1a2e;
+  --accent: #2a2a3e;
+
+  /* Chatbot widget tokens */
+  --bg-primary: #f8f9fb;
+  --surface-primary: #ffffff;
+  --surface-secondary: #f0f1f4;
+  --surface-tertiary: #e2e4e9;
+  --surface-elevated: #ffffff;
+  --text-primary: #1a1a2e;
+  --text-secondary: #555555;
+  --accent-primary: #e2e4e9;
+  --accent-primary-hover: #d4d6dc;
+  --border-subtle: #e2e4e9;
+  --shadow-soft: 0 14px 40px rgba(26, 26, 46, 0.08);
+  --shadow-layered: 0 6px 16px rgba(26, 26, 46, 0.06);
+}
+
+/* ── Body & Global ────────────────────────────────── */
+[data-theme="light"] body {
+  background: var(--bg) !important;
+  color: var(--ink) !important;
+}
+
+/* ── Custom Cursor ────────────────────────────────── */
+[data-theme="light"] .cursor {
+  background: #1a1a2e !important;
+}
+[data-theme="light"] .cursor-ring {
+  border-color: rgba(26, 26, 46, 0.25) !important;
+}
+[data-theme="light"] body:has(a:hover) .cursor-ring,
+[data-theme="light"] body:has(button:hover) .cursor-ring {
+  border-color: #1a1a2e !important;
+}
+
+/* ── Navigation (index.html) ─────────────────────── */
+[data-theme="light"] nav.scrolled {
+  background: rgba(248, 249, 251, 0.92) !important;
+  border-color: var(--border) !important;
+}
+[data-theme="light"] .nav-logo {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .nav-links a {
+  color: var(--soft) !important;
+}
+[data-theme="light"] .nav-links a:hover {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .hamburger span {
+  background: var(--ink) !important;
+}
+
+/* ── Navigation (case study pages) ───────────────── */
+[data-theme="light"] nav {
+  background: rgba(248, 249, 251, 0.9) !important;
+  border-bottom-color: var(--border) !important;
+}
+[data-theme="light"] .nav-back {
+  color: var(--soft) !important;
+}
+[data-theme="light"] .nav-tag {
+  color: var(--soft) !important;
+}
+
+/* ── Nav Tray (Mobile) ───────────────────────────── */
+[data-theme="light"] .nav-tray {
+  background: rgba(248, 249, 251, 0.98) !important;
+}
+[data-theme="light"] .nav-tray a {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .nav-tray a:hover {
+  opacity: 0.45 !important;
+}
+
+/* ── Preloader ────────────────────────────────────── */
+[data-theme="light"] #preloader {
+  background: #f8f9fb !important;
+}
+[data-theme="light"] .pre-logo {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .pre-tag {
+  color: var(--soft) !important;
+}
+[data-theme="light"] .prog-wrap {
+  background: rgba(26, 26, 46, 0.1) !important;
+}
+[data-theme="light"] .prog-bar {
+  background: #1a1a2e !important;
+  box-shadow: 0 0 8px rgba(26, 26, 46, 0.3) !important;
+}
+
+/* ── Hero (index.html) ───────────────────────────── */
+[data-theme="light"] .hero-headline {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .hero-headline .accent-word {
+  -webkit-text-stroke-color: rgba(26, 26, 46, 0.35) !important;
+}
+[data-theme="light"] .hero-sub {
+  color: var(--dim) !important;
+}
+[data-theme="light"] .hero-eyebrow {
+  color: var(--dim) !important;
+}
+
+/* ── Buttons ──────────────────────────────────────── */
+[data-theme="light"] .btn-primary {
+  background: #1a1a2e !important;
+  color: #f8f9fb !important;
+  box-shadow: 0 0 22px rgba(26, 26, 46, 0.15) !important;
+}
+[data-theme="light"] .btn-primary:hover {
+  box-shadow: 0 0 36px rgba(26, 26, 46, 0.25) !important;
+}
+[data-theme="light"] .btn-secondary {
+  color: var(--ink) !important;
+  border-color: rgba(26, 26, 46, 0.18) !important;
+}
+[data-theme="light"] .btn-secondary:hover {
+  background: rgba(26, 26, 46, 0.05) !important;
+  border-color: rgba(26, 26, 46, 0.35) !important;
+  box-shadow: 0 0 18px rgba(26, 26, 46, 0.06) !important;
+}
+
+/* ── Scroll Indicator ─────────────────────────────── */
+[data-theme="light"] .scroll-ind span {
+  color: var(--dim) !important;
+}
+[data-theme="light"] .scroll-line {
+  background: linear-gradient(to bottom, var(--dim), transparent) !important;
+}
+
+/* ── Section Labels & Titles ──────────────────────── */
+[data-theme="light"] .section-label {
+  color: var(--dim) !important;
+}
+[data-theme="light"] .section-title {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .section-body {
+  color: rgba(26, 26, 46, 0.75) !important;
+}
+
+/* ── Section Divider ──────────────────────────────── */
+[data-theme="light"] .sec-divider {
+  background: linear-gradient(to right, transparent, var(--border), transparent) !important;
+}
+
+/* ── About ────────────────────────────────────────── */
+[data-theme="light"] .about-img-ring {
+  border-color: rgba(26, 26, 46, 0.1) !important;
+  box-shadow: 0 0 55px rgba(26, 26, 46, 0.06) !important;
+}
+[data-theme="light"] .about-img-ring:hover {
+  box-shadow: 0 0 85px rgba(26, 26, 46, 0.1) !important;
+}
+
+/* ── Skill Pills ──────────────────────────────────── */
+[data-theme="light"] .skill-pill {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+[data-theme="light"] .skill-pill:hover {
+  background: rgba(26, 26, 46, 0.06) !important;
+  border-color: rgba(26, 26, 46, 0.18) !important;
+  box-shadow: 0 0 14px rgba(26, 26, 46, 0.04) !important;
+}
+[data-theme="light"] .skill-pill i {
+  color: var(--soft) !important;
+}
+
+/* ── Project Cards ────────────────────────────────── */
+[data-theme="light"] .project-card {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 2px 12px rgba(26, 26, 46, 0.04) !important;
+}
+[data-theme="light"] .project-card:hover {
+  transform: translateY(-8px) scale(1.01) !important;
+  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.1) !important;
+  border-color: rgba(26, 26, 46, 0.16) !important;
+}
+[data-theme="light"] .card-img {
+  background: linear-gradient(135deg, #e8eaf0, #dfe1e8) !important;
+}
+[data-theme="light"] .card-img-num {
+  color: rgba(26, 26, 46, 0.06) !important;
+}
+[data-theme="light"] .card-img-icon {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(26, 26, 46, 0.1) !important;
+  color: var(--soft) !important;
+}
+[data-theme="light"] .cs-badge {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(26, 26, 46, 0.12) !important;
+  color: var(--soft) !important;
+}
+[data-theme="light"] .tag {
+  background: rgba(26, 26, 46, 0.04) !important;
+  border-color: var(--border) !important;
+  color: var(--soft) !important;
+}
+[data-theme="light"] .card-title {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .card-desc {
+  color: var(--soft) !important;
+}
+[data-theme="light"] .card-cta {
+  color: var(--ink) !important;
+  border-bottom-color: rgba(26, 26, 46, 0.18) !important;
+}
+[data-theme="light"] .card-cta:hover {
+  border-color: var(--ink) !important;
+}
+
+/* ── Contact Form ─────────────────────────────────── */
+[data-theme="light"] .form-label {
+  color: var(--soft) !important;
+}
+[data-theme="light"] .form-input,
+[data-theme="light"] .form-textarea {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+[data-theme="light"] .form-input:focus,
+[data-theme="light"] .form-textarea:focus {
+  border-color: rgba(26, 26, 46, 0.3) !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 18px rgba(26, 26, 46, 0.06) !important;
+}
+[data-theme="light"] .form-input::placeholder,
+[data-theme="light"] .form-textarea::placeholder {
+  color: rgba(26, 26, 46, 0.35) !important;
+}
+[data-theme="light"] .form-select {
+  background-color: #ffffff !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(26,26,46,0.45)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+[data-theme="light"] .form-select:focus {
+  border-color: rgba(26, 26, 46, 0.3) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 18px rgba(26, 26, 46, 0.06) !important;
+}
+
+/* ── Submit Button ────────────────────────────────── */
+[data-theme="light"] .btn-submit {
+  background: #1a1a2e !important;
+  color: #f8f9fb !important;
+  box-shadow: 0 0 22px rgba(26, 26, 46, 0.12) !important;
+}
+[data-theme="light"] .btn-submit:hover {
+  box-shadow: 0 0 38px rgba(26, 26, 46, 0.22) !important;
+}
+[data-theme="light"] .btn-submit.loading {
+  background: #888888 !important;
+}
+
+/* ── Social Links ─────────────────────────────────── */
+[data-theme="light"] .social-link {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+  color: var(--soft) !important;
+}
+[data-theme="light"] .social-link:hover {
+  color: var(--ink) !important;
+  border-color: rgba(26, 26, 46, 0.22) !important;
+  background: rgba(26, 26, 46, 0.03) !important;
+  box-shadow: 0 0 18px rgba(26, 26, 46, 0.05) !important;
+}
+
+/* ── Footer ───────────────────────────────────────── */
+[data-theme="light"] footer {
+  border-top-color: var(--border) !important;
+}
+[data-theme="light"] .footer-logo {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .footer-links a {
+  color: var(--soft) !important;
+}
+[data-theme="light"] .footer-links a:hover {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .footer-copy {
+  color: rgba(26, 26, 46, 0.35) !important;
+}
+
+/* ── Theme Toggle Button ──────────────────────────── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--dim);
+  cursor: pointer;
+  transition: color .3s, border-color .3s, background .3s, transform .3s;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+  transform: scale(1.08);
+}
+[data-theme="light"] .theme-toggle:hover {
+  border-color: rgba(26,26,46,0.25) !important;
+  background: rgba(26,26,46,0.04) !important;
+}
+.theme-toggle i {
+  font-size: 1.15rem;
+  transition: transform .4s cubic-bezier(.4,0,.2,1), opacity .3s;
+}
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-toggle .icon-sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+.theme-toggle .icon-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+[data-theme="light"] .theme-toggle .icon-sun {
+  opacity: 1 !important;
+  transform: rotate(0deg) scale(1) !important;
+}
+[data-theme="light"] .theme-toggle .icon-moon {
+  opacity: 0 !important;
+  transform: rotate(90deg) scale(0.5) !important;
+}
+
+/* ── Chatbot Toggle (Light) ───────────────────────── */
+[data-theme="light"] .chatbot-toggle {
+  border-color: var(--border) !important;
+  background: #ffffff !important;
+  box-shadow: 0 6px 24px rgba(26, 26, 46, 0.08) !important;
+}
+[data-theme="light"] .chatbot-toggle:hover {
+  background: var(--surface-secondary) !important;
+  box-shadow: 0 14px 40px rgba(26, 26, 46, 0.1) !important;
+}
+[data-theme="light"] .chatbot-dot {
+  background: var(--ink) !important;
+  box-shadow: 0 0 0 1px rgba(26, 26, 46, 0.2) !important;
+}
+[data-theme="light"] .chatbot-input:focus {
+  border-color: #1a1a2e !important;
+  box-shadow: 0 0 0 3px rgba(26, 26, 46, 0.08) !important;
+}
+[data-theme="light"] .typing span {
+  background: #1a1a2e !important;
+}
+[data-theme="light"] .lead-summary {
+  background: rgba(26, 26, 46, 0.03) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   CASE STUDY PAGES — LIGHT OVERRIDES
+   ═══════════════════════════════════════════════════ */
+
+/* ── Shared Case Study Elements ───────────────────── */
+[data-theme="light"] .cs-hero {
+  background: #f8f9fb !important;
+}
+[data-theme="light"] .cs-hero-title {
+  color: #1a1a2e !important;
+}
+[data-theme="light"] .cs-hero-summary {
+  color: rgba(26, 26, 46, 0.7) !important;
+}
+[data-theme="light"] .cs-hero-meta {
+  border-top-color: var(--border) !important;
+}
+[data-theme="light"] .meta-label {
+  color: rgba(26, 26, 46, 0.4) !important;
+}
+[data-theme="light"] .meta-value {
+  color: rgba(26, 26, 46, 0.85) !important;
+}
+[data-theme="light"] .cs-hero-scroll {
+  color: rgba(26, 26, 46, 0.4) !important;
+}
+[data-theme="light"] .cs-hero-scroll::after {
+  background: linear-gradient(to bottom, rgba(26, 26, 46, 0.4), transparent) !important;
+}
+[data-theme="light"] .cs-title {
+  color: #1a1a2e !important;
+}
+[data-theme="light"] .cs-body-text {
+  color: rgba(26, 26, 46, 0.8) !important;
+}
+[data-theme="light"] .sec-line {
+  background: var(--border) !important;
+}
+
+/* ── Two-column visual ────────────────────────────── */
+[data-theme="light"] .col-visual {
+  background: rgba(26, 26, 46, 0.03) !important;
+  border-color: var(--border) !important;
+}
+
+/* ── Case Study Conclusion ────────────────────────── */
+[data-theme="light"] .cs-conclusion {
+  background: #f0f2f7 !important;
+}
+[data-theme="light"] .cs-conclusion::before {
+  background-image: linear-gradient(rgba(26, 26, 46, 0.04) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(26, 26, 46, 0.04) 1px, transparent 1px) !important;
+}
+[data-theme="light"] .conclusion-text {
+  color: #1a1a2e !important;
+}
+[data-theme="light"] .conclusion-sub {
+  color: rgba(26, 26, 46, 0.6) !important;
+}
+[data-theme="light"] .btn-blue {
+  box-shadow: 0 0 28px rgba(21, 101, 192, 0.12) !important;
+}
+
+/* ── Case Study Footer ────────────────────────────── */
+[data-theme="light"] .cs-footer {
+  border-top-color: var(--border) !important;
+}
+[data-theme="light"] .cs-footer a {
+  color: var(--soft) !important;
+}
+
+/* ── Hero glows (muted for light) ─────────────────── */
+[data-theme="light"] .hero-glow,
+[data-theme="light"] .hero-glow2,
+[data-theme="light"] .hero-glow-orange,
+[data-theme="light"] .hero-glow-amber {
+  opacity: 0.4 !important;
+}
+[data-theme="light"] .hero-grid-bg {
+  opacity: 0.04 !important;
+}
+[data-theme="light"] .cs-hero-bg {
+  opacity: 0.4 !important;
+}
+
+/* ── Dispatch — UI Cards ──────────────────────────── */
+[data-theme="light"] .ui-card {
+  background: #ffffff !important;
+  border-color: rgba(21, 101, 192, 0.15) !important;
+}
+[data-theme="light"] .ui-card:hover {
+  border-color: rgba(21, 101, 192, 0.35) !important;
+}
+[data-theme="light"] .ui-name {
+  color: #1a1a2e !important;
+}
+[data-theme="light"] .ui-desc {
+  color: rgba(26, 26, 46, 0.6) !important;
+}
+
+/* ── Dispatch — Dashboard Mock ────────────────────── */
+[data-theme="light"] .dash-mock {
+  background: #ffffff !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+}
+[data-theme="light"] .dash-top {
+  background: #f0f1f4 !important;
+}
+[data-theme="light"] .dash-top-title {
+  color: rgba(26, 26, 46, 0.4) !important;
+}
+[data-theme="light"] .kpi {
+  background: rgba(26, 26, 46, 0.04) !important;
+}
+[data-theme="light"] .kpi-lbl {
+  color: rgba(26, 26, 46, 0.4) !important;
+}
+[data-theme="light"] .call-text {
+  color: rgba(26, 26, 46, 0.7) !important;
+}
+
+/* ── Dispatch — Slider ────────────────────────────── */
+[data-theme="light"] .da-slider-container {
+  background: #f0f2f7 !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 30px 80px rgba(26, 26, 46, 0.08) !important;
+}
+[data-theme="light"] .da-slider-nav {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 10px 30px rgba(26, 26, 46, 0.06) !important;
+}
+[data-theme="light"] .da-nav-btn {
+  color: var(--soft) !important;
+}
+[data-theme="light"] .da-nav-btn:hover {
+  background: rgba(26, 26, 46, 0.05) !important;
+}
+[data-theme="light"] .da-slider-counter {
+  color: var(--ink) !important;
+}
+[data-theme="light"] .da-slider-counter span {
+  color: var(--soft) !important;
+}
+
+/* ── Dispatch — Video ─────────────────────────────── */
+[data-theme="light"] .da-video-wrap {
+  background: #f0f2f7 !important;
+  border-color: var(--border) !important;
+}
+[data-theme="light"] .da-video-caption {
+  border-top-color: var(--border) !important;
+  color: var(--soft) !important;
+}
+
+/* ── Dispatch — Lightbox ──────────────────────────── */
+[data-theme="light"] .da-lightbox {
+  background: rgba(248, 249, 251, 0.92) !important;
+}
+[data-theme="light"] .da-lightbox-content {
+  border-color: var(--border) !important;
+  box-shadow: 0 32px 80px rgba(26, 26, 46, 0.12) !important;
+}
+[data-theme="light"] .da-close {
+  color: var(--soft) !important;
+}
+[data-theme="light"] .da-close:hover {
+  color: var(--ink) !important;
+}
+
+/* ── Shared — Result cards ────────────────────────── */
+[data-theme="light"] .result-card {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+}
+[data-theme="light"] .result-num {
+  color: #1a1a2e !important;
+}
+[data-theme="light"] .result-label {
+  color: rgba(26, 26, 46, 0.6) !important;
+}
+
+/* ── Shared — Process / Timeline / Pipeline / Roadmap ── */
+[data-theme="light"] .proc-card,
+[data-theme="light"] .tl-card,
+[data-theme="light"] .road-item,
+[data-theme="light"] .arch-layer {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+}
+[data-theme="light"] .tl-num {
+  color: rgba(26, 26, 46, 0.06) !important;
+}
+[data-theme="light"] .tl-name,
+[data-theme="light"] .proc-name,
+[data-theme="light"] .flow-name,
+[data-theme="light"] .al-name,
+[data-theme="light"] .pipe-name {
+  color: #1a1a2e !important;
+}
+[data-theme="light"] .tl-desc,
+[data-theme="light"] .proc-desc,
+[data-theme="light"] .flow-desc,
+[data-theme="light"] .pipe-desc,
+[data-theme="light"] .road-text,
+[data-theme="light"] .al-tech {
+  color: rgba(26, 26, 46, 0.65) !important;
+}
+
+/* ── Shared — Pipeline steps ──────────────────────── */
+[data-theme="light"] .pipe-tag {
+  border-color: rgba(26, 26, 46, 0.12) !important;
+  color: var(--soft) !important;
+}
+
+/* ── FitTime — Rank cards ─────────────────────────── */
+[data-theme="light"] .rank-card {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+}
+[data-theme="light"] .rank-card:hover {
+  background: rgba(26, 26, 46, 0.02) !important;
+}
+[data-theme="light"] .rank-name {
+  color: #1a1a2e !important;
+}
+[data-theme="light"] .rank-reps {
+  color: rgba(26, 26, 46, 0.5) !important;
+}
+
+/* ── FitTime — Phone mock ─────────────────────────── */
+[data-theme="light"] .phone-frame {
+  background: #ffffff !important;
+  border-color: rgba(255, 143, 0, 0.2) !important;
+  box-shadow: 0 16px 40px rgba(26, 26, 46, 0.08) !important;
+}
+[data-theme="light"] .phone-top {
+  background: #f0f1f4 !important;
+}
+[data-theme="light"] .phone-notch {
+  background: #e2e4e9 !important;
+}
+[data-theme="light"] .phone-header {
+  color: #1a1a2e !important;
+}
+[data-theme="light"] .app-icon.active {
+  background: rgba(26, 26, 46, 0.06) !important;
+  border-color: rgba(26, 26, 46, 0.1) !important;
+  color: rgba(26, 26, 46, 0.5) !important;
+}
+[data-theme="light"] .phone-divider {
+  background: rgba(26, 26, 46, 0.08) !important;
+}
+[data-theme="light"] .rep-label {
+  color: rgba(26, 26, 46, 0.4) !important;
+}
+
+/* ── DataScrap — Terminal mock ────────────────────── */
+[data-theme="light"] .terminal {
+  background: #1a1a2e !important;
+}
+
+/* ── Glowere — Chat mock ─────────────────────────── */
+[data-theme="light"] .mock-screen {
+  background: #ffffff !important;
+  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.08) !important;
+}
+[data-theme="light"] .mock-top {
+  background: #f0f1f4 !important;
+}
+[data-theme="light"] .mock-msg.bot {
+  background: #f0f1f4 !important;
+  color: rgba(26, 26, 46, 0.8) !important;
+}
+[data-theme="light"] .mock-msg.typing {
+  background: #f0f1f4 !important;
+}
+[data-theme="light"] .mock-dot-anim {
+  background: rgba(26, 26, 46, 0.35) !important;
+}
+
+/* ── Glowere — Media section ──────────────────────── */
+[data-theme="light"] .media-card {
+  background: #ffffff !important;
+  border-color: var(--border) !important;
+}
+
+/* ── WebGL Canvas (dimmed in light mode) ──────────── */
+[data-theme="light"] #bg-canvas {
+  opacity: 0.35 !important;
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* ── Smooth theme transition ──────────────────────── */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color .4s ease, color .4s ease, border-color .4s ease, box-shadow .4s ease, opacity .4s ease !important;
+  transition-delay: 0s !important;
+}

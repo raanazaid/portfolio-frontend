@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<script>
+  (function(){var t=localStorage.getItem('portfolio-theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.setAttribute('data-theme',t)})()
+</script>
 <title>DispatchAI — AI Calling Agent · Case Study</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="./theme-toggle.js" defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -237,6 +240,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 }
 
 </style>
+<link rel="stylesheet" href="./theme.css" />
 </head>
 <body style="background:var(--bg)">
 <div class="cursor" id="cursor"></div>
@@ -248,6 +252,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5vw;display:
 <nav>
   <a href="index.html#projects" class="nav-back" aria-label="Back"><i class="ph ph-arrow-left" style="font-size:1.4rem"></i></a>
   <a href="index.html" class="nav-logo" style="position:absolute; left:50%; transform:translateX(-50%); font-size:1.4rem;">Zaid.</a>
+  <button class="theme-toggle" aria-label="Toggle theme">
+    <span class="icon-sun"><i class="ph ph-sun"></i></span>
+    <span class="icon-moon"><i class="ph ph-moon"></i></span>
+  </button>
 </nav>
 
 <section class="cs-hero" style="background:transparent">
